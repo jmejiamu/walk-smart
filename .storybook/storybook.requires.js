@@ -48,6 +48,7 @@ try {
 const getStories = () => {
   return {
     "./.storybook/stories/Button/Button.stories.tsx": require("./stories/Button/Button.stories.tsx"),
+    "./.storybook/stories/JoinCard/JoinCard.stories.tsx": require("./stories/JoinCard/JoinCard.stories.tsx"),
   };
 };
 
