@@ -50,6 +50,7 @@ const getStories = () => {
     "./.storybook/stories/Button/Button.stories.tsx": require("./stories/Button/Button.stories.tsx"),
     "./.storybook/stories/JoinCard/JoinCard.stories.tsx": require("./stories/JoinCard/JoinCard.stories.tsx"),
     "./.storybook/stories/ListCard/ListCard.stories.tsx": require("./stories/ListCard/ListCard.stories.tsx"),
+    "./.storybook/stories/Map/Map.stories.tsx": require("./stories/Map/Map.stories.tsx"),
     "./.storybook/stories/Search/Search.stories.tsx": require("./stories/Search/Search.stories.tsx"),
   };
 };
