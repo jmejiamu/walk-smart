@@ -1,23 +1,21 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text, TextInput, TextInputProps, TextStyle, View } from "react-native";
-import { colors } from '../../../../src/theme';
+import { colors } from '../../../src/theme';
 
 interface Props {
     title?: string;
-
-
-    TextInputMeta?: TextInputProps;
+    textInputMeta?: TextInputProps;
     titleStyle?: StyleProp<TextStyle>
     textInputStyle?: StyleProp<TextStyle>;
 }
 
-const TextInputForm = ({ TextInputMeta, title, textInputStyle, titleStyle }: Props) => {
+const TextInputForm = ({ textInputMeta, title, textInputStyle, titleStyle }: Props) => {
     return (
         <View style={style.container}>
             <Text style={[style.textTitle, titleStyle]}> {title} </Text>
             <TextInput
                 style={[style.textInput, textInputStyle]}
-                {...TextInputMeta}
+                {...textInputMeta}
             />
         </View>
     )

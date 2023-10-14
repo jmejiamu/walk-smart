@@ -1,17 +1,21 @@
 import React from 'react';
-import Form from './Form';
+import Form from "./TextInputForm";
 
-const FromMeta = {
+const FormMeta = {
     title: 'Form',
     component: Form,
     decorators: [
         Story => (
             <>
-                <Form />
+                <Form   
+                    title='First Name'
+                    titleStyle={{color:'#000'}}
+                    textInputStyle={{color:'#fff'}}
+                /> 
             </>
         ),
     ],
 };
 
-export default FromMeta;
+export default FormMeta;
 export const Basic = {};
