@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Button} from './Button';
+import ButtonComponent from './Button';
 import {spacing} from '../../../src/theme';
 
 const ButtonMeta = {
   title: 'Button',
-  component: Button,
+  component: ButtonComponent,
   decorators: [
     Story => (
       <View style={styles.container}>

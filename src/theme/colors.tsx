@@ -4,4 +4,5 @@ export const colors = {
   color_300: '#70A9A1',
   color_400: '#CFD7C7',
   color_500: '#F6F1D1',
+  color_600: '#FFFFFF',
 };

@@ -7,7 +7,7 @@ interface DefProps {
   onPress: () => void;
 }
 
-export const Button = ({onPress, text}: DefProps) => {
+const ButtonComponent = ({onPress, text}: DefProps) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -18,6 +18,7 @@ export const Button = ({onPress, text}: DefProps) => {
   );
 };
 
+export default ButtonComponent;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
