@@ -7,15 +7,25 @@ const AddEventBtnMeta = {
     component: AddEventBtn,
     decorators: [
         Story => (
-            <View style={{ margin: 10, height: 400, width: 300, backgroundColor: '#fff', borderColor: '#000', borderWidth: 2 }}>
-                <AddEventBtn
-                    btnStyle={{
-                        top: 20,
-                        left:20,
-                        height: 50,
-                        width: 50,
-                    }}
-                />
+            <View
+                style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                }}>
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row-reverse',
+                        alignSelf: 'flex-end',
+                        padding: 20,
+                    }}>
+                    <AddEventBtn
+                        btnStyle={{
+                            height: 50,
+                            width: 50,
+                        }}
+                    />
+                </View>
             </View>
         ),
     ],
