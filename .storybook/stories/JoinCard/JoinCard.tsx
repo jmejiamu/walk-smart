@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, ViewStyle} from 'react-native';
-import {colors, spacing} from '../../../src/theme';
-
+import { View, Text, ViewStyle } from 'react-native';
+import { styles  } from "./styles";
 interface Props {
   title: string;
   containerStyle?: ViewStyle;
@@ -34,26 +33,3 @@ const JoinCard = (props: Props) => {
 };
 
 export default JoinCard;
-
-const styles = StyleSheet.create({
-  footerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  container: {
-    borderWidth: 1,
-    borderColor: colors.color_400,
-    padding: spacing.size_medium,
-    borderRadius: 20,
-  },
-  title: {
-    fontSize: 36,
-    color: colors.color_200,
-  },
-  footerText: {
-    fontSize: 17,
-    color: colors.color_400,
-    fontWeight: 'bold',
-  },
-});

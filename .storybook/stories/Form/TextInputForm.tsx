@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TextInput, TextInputProps, TextStyle, View } from "react-native";
-import { colors } from '../../../src/theme';
-
+import { StyleProp, Text, TextInput, TextInputProps, TextStyle, View } from "react-native";
+import { styles } from "./styles";
 interface Props {
     title?: string;
     textInputMeta?: TextInputProps;
@@ -11,10 +10,10 @@ interface Props {
 
 const TextInputForm = ({ textInputMeta, title, textInputStyle, titleStyle }: Props) => {
     return (
-        <View style={style.container}>
-            <Text style={[style.textTitle, titleStyle]}> {title} </Text>
+        <View style={styles.container}>
+            <Text style={[styles.textTitle, titleStyle]}> {title} </Text>
             <TextInput
-                style={[style.textInput, textInputStyle]}
+                style={[styles.textInput, textInputStyle]}
                 {...textInputMeta}
             />
         </View>
@@ -22,19 +21,3 @@ const TextInputForm = ({ textInputMeta, title, textInputStyle, titleStyle }: Pro
 }
 
 export default TextInputForm;
-const style = StyleSheet.create({
-    container: {
-        padding: 10,
-    },
-    textInput: {
-        backgroundColor: colors.color_100,
-        borderRadius: 5,
-        height: 35,
-    },
-    textTitle:{
-        color:'#fff',
-        fontSize: 15,
-        fontWeight:'600',
-        paddingBottom: 10,
-    }
-})

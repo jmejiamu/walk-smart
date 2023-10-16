@@ -2,14 +2,9 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   ImageBackground,
-  Dimensions,
 } from 'react-native';
-import {colors} from '../../../src/theme';
-
-const {height} = Dimensions.get('screen');
-
+import { styles } from "./styles";
 interface Props {
   eventName: string;
   badge: JSX.Element;
@@ -36,25 +31,3 @@ const EventHeader = (props: Props) => {
 };
 
 export default EventHeader;
-
-const styles = StyleSheet.create({
-  rightElemContainer: {
-    flexDirection: 'row-reverse',
-  },
-  bckImage: {
-    borderBottomRightRadius: 40,
-    borderBottomLeftRadius: 40,
-  },
-  image: {
-    height: height * 0.46,
-    padding: 20,
-  },
-  eventNameContainer: {
-    marginTop: height * 0.3,
-  },
-  eventName: {
-    fontSize: 45,
-    justifyContent: 'flex-end',
-    color: colors.color_500,
-  },
-});

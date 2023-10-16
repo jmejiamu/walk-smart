@@ -1,7 +1,6 @@
 import React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { colors } from "../../../src/theme";
-
+import { Image, ImageStyle, StyleProp,  View, ViewStyle } from "react-native";
+import { styles } from "./styles";
 interface Props {
     avatarContainerStyle?: ViewStyle;
     avatarImageStyle?: StyleProp<ImageStyle>;
@@ -20,19 +19,3 @@ const Avatar = (props: Props) => {
 }
 
 export default Avatar;
-const styles = StyleSheet.create({
-    avatar: {
-        alignItems: 'center',
-        backgroundColor: colors.color_400,
-        borderRadius: 50,
-        height: 100,
-        justifyContent: 'center',
-        width: 100
-    },
-    avatarImage: {
-        borderRadius: 50,
-        height: 90,
-        resizeMode: 'stretch',
-        width: 90,
-    }
-})

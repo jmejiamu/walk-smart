@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../../../src/theme";
+import { colors, spacing } from "../../../../src/theme";
 
 export const styles =  StyleSheet.create({
     continer: {
@@ -16,16 +16,16 @@ export const styles =  StyleSheet.create({
     avatar: {
         backgroundColor: colors.color_100,
         width: 150,
-        borderTopLeftRadius: 20,
-        borderBottomLeftRadius: 20
+        borderTopLeftRadius: spacing.size_medium,
+        borderBottomLeftRadius: spacing.size_medium
     },
     descriptionContainer: {
         flex: 1, 
         backgroundColor: '#fff',
         borderWidth: 1.5,
         borderColor: colors.color_100,
-        borderTopEndRadius: 20,
-        borderBottomEndRadius: 20,
+        borderTopEndRadius: spacing.size_medium,
+        borderBottomEndRadius: spacing.size_medium,
         padding: 5,
     },
     textTitle: {
