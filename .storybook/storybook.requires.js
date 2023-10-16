@@ -47,6 +47,7 @@ try {
 
 const getStories = () => {
   return {
+    "./.storybook/stories/AddEventBtn/AddEventBtn.stories.tsx": require("./stories/AddEventBtn/AddEventBtn.stories.tsx"),
     "./.storybook/stories/Avatar/Avatar.stories.tsx": require("./stories/Avatar/Avatar.stories.tsx"),
     "./.storybook/stories/BottomSheet/BottomSheetComponent.stories.tsx": require("./stories/BottomSheet/BottomSheetComponent.stories.tsx"),
     "./.storybook/stories/Btn/Btn.stories.tsx": require("./stories/Btn/Btn.stories.tsx"),
