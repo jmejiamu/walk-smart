@@ -1,13 +1,19 @@
 import React from "react";
-import { Platform, SafeAreaView, StyleSheet } from "react-native"
+import { Platform, SafeAreaView, ViewStyle } from "react-native"
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from "react-native-maps";
+import { styles } from "./styles";
 
-const Map = () => {
+interface Props {
+    mapContainerStyle?: ViewStyle;
+    mapStyle?: ViewStyle;
+}
+
+const Map = (props: Props) => {
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, props.mapContainerStyle]}>
             <MapView
                 provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
-                style={styles.map}
+                style={[styles.map, props.mapStyle]}
                 region={{
                     latitude: 37.78825,
                     longitude: -122.4324,
@@ -21,11 +27,3 @@ const Map = () => {
 }
 
 export default Map;
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject,
-    }
-});

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, TextInput, StyleSheet, ViewStyle, TextStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { styles } from "./styles";
 import {colors} from '../../../src/theme';
 
 interface Props {
@@ -39,21 +40,3 @@ const Search = (props: Props) => {
 };
 
 export default Search;
-
-const styles = StyleSheet.create({
-  iconStyle: {
-    paddingHorizontal: 10,
-  },
-  mainContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.color_500,
-    borderRadius: 20,
-  },
-  searchBarStyle: {
-    flex: 1,
-    backgroundColor: colors.color_500,
-    borderRadius: 30,
-    paddingVertical: 8,
-  },
-});

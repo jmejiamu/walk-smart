@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
-import { colors } from '../../../src/theme';
-
+import {  TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { styles } from "./styles";
 interface Props {
     action?: () => void;
     btnState?: 'enable' | 'disable';
@@ -28,10 +27,3 @@ const Btn = (props: Props): React.ReactNode => {
 }
 
 export default Btn;
-const styles = StyleSheet.create({
-    btn: {
-        backgroundColor: colors.color_100,
-        borderRadius: 5,
-        justifyContent: 'center',
-    }
-})

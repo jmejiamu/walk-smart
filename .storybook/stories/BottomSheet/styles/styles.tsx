@@ -1,9 +1,9 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../../../src/theme';
+import { StyleSheet } from 'react-native';
+import { colors, spacing } from '../../../../src/theme';
 
 export const styles = StyleSheet.create({
   bottomSheetContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: spacing.size_small,
     backgroundColor: colors.color_600,
   },
   container: {
@@ -17,19 +17,19 @@ export const styles = StyleSheet.create({
   footerContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 10,
+    marginBottom: spacing.size_small,
   },
   header: {
     fontSize: 36,
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: spacing.size_large,
     color: colors.color_100,
   },
   textInputStyle: {
     backgroundColor: colors.color_400,
-    borderRadius: 30,
+    borderRadius: spacing.size_large,
     height: 35,
-    paddingHorizontal: 10,
-    marginBottom: 30,
+    paddingHorizontal: spacing.size_small,
+    marginBottom: spacing.size_large,
   },
 });
