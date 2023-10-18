@@ -6,6 +6,7 @@ import { styles } from "./styles";
 interface Props {
     mapContainerStyle?: ViewStyle;
     mapStyle?: ViewStyle;
+    children?: React.ReactNode;
 }
 
 const Map = (props: Props) => {
@@ -21,6 +22,7 @@ const Map = (props: Props) => {
                     longitudeDelta: 0.0121,
                 }}
             >
+                {props.children}
             </MapView>
         </SafeAreaView>
     )
