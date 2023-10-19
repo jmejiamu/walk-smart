@@ -8,7 +8,10 @@ const Tab = createBottomTabNavigator();
 
 const BottomNav = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {backgroundColor: colors.color_300},
+      }}>
       <Tab.Screen
         options={{
           tabBarIcon: ({focused}) => (
