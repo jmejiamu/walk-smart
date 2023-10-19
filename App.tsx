@@ -9,7 +9,7 @@ const SBLOADER = 'false';
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={{colors: {background: 'white'}}}>
       <SafeAreaView style={{flex: 1}}>
         <BottomNav />
       </SafeAreaView>
