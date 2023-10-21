@@ -4,6 +4,8 @@ import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from "react-native-maps";
 import { styles } from "./styles";
 
 interface Props {
+    latitude: number,
+    longitude: number
     mapContainerStyle?: ViewStyle;
     mapStyle?: ViewStyle;
     children?: React.ReactNode;
@@ -13,11 +15,12 @@ const Map = (props: Props) => {
     return (
         <SafeAreaView style={[styles.container, props.mapContainerStyle]}>
             <MapView
+                showsUserLocation
                 provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                 style={[styles.map, props.mapStyle]}
                 region={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
+                    latitude: props.latitude,
+                    longitude: props.longitude,
                     latitudeDelta: 0.015,
                     longitudeDelta: 0.0121,
                 }}

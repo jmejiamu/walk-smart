@@ -2,11 +2,12 @@ import { useState } from "react"
 import { Platform } from "react-native";
 import { PERMISSIONS, PermissionStatus, check, request, openSettings, RESULTS } from "react-native-permissions";
 
-
+// React Native library documentation > https://github.com/react-native-maps/react-native-maps
 interface PermissionState {
     locationStatus: PermissionStatus
 }
 
+// This function open device setting to allow permission to share location with Walk Smart
 const OpenSettingAppDevice = (permissionStatus: PermissionStatus) => {
     
     if (permissionStatus === RESULTS.BLOCKED || permissionStatus === RESULTS.DENIED) {
@@ -21,7 +22,8 @@ export const usePermission = () => {
     }
 
     const [permission, setPermission] = useState(permissionsInitState)
-
+    
+    // askMapPermission is not used, but this can be use for new screens.
     const askMapPermissions = async () => {
 
         let pemissionsStatus: PermissionStatus;
@@ -45,13 +47,11 @@ export const usePermission = () => {
 
         if (Platform.OS === 'ios') {
             pemissionsStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-            OpenSettingAppDevice(pemissionsStatus)
         } else {
             pemissionsStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-            OpenSettingAppDevice(pemissionsStatus)
         }
-
         setPermission({
+
             ...permission,
             locationStatus: pemissionsStatus
         })
