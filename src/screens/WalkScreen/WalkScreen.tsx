@@ -1,13 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AppState } from 'react-native';
+import { Marker } from 'react-native-maps';
+import Map from '../../../.storybook/stories/Map/Map';
+import { usePermission } from '../../hook/usePermission';
+import { useGeoLocation } from '../../hook/useGeoLocation';
 
-import {View, Text} from 'react-native';
+interface MapLocationsEvents {
+	latitude: number;
+	longitude: number;
+	eventTitle: string;
+	eventDescription: string
+}
 
 const WalkScreen = () => {
-  return (
-    <View>
-      <Text>Walk Screen</Text>
-    </View>
-  );
+
+	const { checkMapPermissions } = usePermission()
+	const { location } = useGeoLocation()
+
+
+	useEffect(() => {
+		AppState.addEventListener('change', state => {
+			if (state !== 'active') return
+			checkMapPermissions();
+		})
+	}, [])
+
+	// NOTE: This is a test events
+	const eventsList: MapLocationsEvents[] = [
+		{ latitude: 37.7939, longitude: -122.3970, eventTitle: 'Best place', eventDescription: 'Hello this is a greate place 123' },
+		{ latitude: 37.7916, longitude: -122.3966, eventTitle: 'Visit us', eventDescription: 'Join our reading Walk event' },
+		{ latitude: 37.7921, longitude: -122.3958, eventTitle: 'Visit test', eventDescription: 'Join our reading Walk event 43434' },
+		{ latitude: 37.7934, longitude: -122.3988, eventTitle: 'THIS IS A TEST', eventDescription: 'THIS IS EVENTENT DEV HELLO WORLD' }
+	]
+
+	return (
+		<>
+			<Map
+				latitude={location.Latitude}
+				longitude={location.Longitude}
+			>
+				{
+					eventsList.map((event, i) => {
+						return (
+							<Marker
+								key={i}
+								coordinate={{
+									latitude: event.latitude,
+									longitude: event.longitude
+								}}
+								title={event.eventTitle}
+								description={event.eventDescription}
+							/>
+						)
+					})
+				}
+			</Map>
+		</>
+	)
+
 };
 
 export default WalkScreen;
