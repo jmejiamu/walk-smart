@@ -1,8 +1,8 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {WalkScreen, ProfileScreen, EventsScreen} from '../../screens';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { WalkScreen, ProfileScreen, EventsScreen } from '../../screens';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {colors} from '../../theme';
+import { colors } from '../../theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -10,11 +10,13 @@ const BottomNav = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: {backgroundColor: colors.color_300},
+        headerShown: false,
+        headerStyle: { elevation: 0 },
+        tabBarStyle: { backgroundColor: colors.color_300, borderTopWidth: 0 },
       }}>
       <Tab.Screen
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="walking"
               size={25}
@@ -27,7 +29,7 @@ const BottomNav = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="list"
               size={25}
@@ -40,7 +42,7 @@ const BottomNav = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="user-alt"
               size={25}

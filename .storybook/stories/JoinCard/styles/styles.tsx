@@ -8,6 +8,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: spacing.size_medium,
   },
+  headerContainer: {
+    paddingHorizontal: 4, 
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
+  },
   container: {
     borderWidth: 1,
     borderColor: colors.color_400,
