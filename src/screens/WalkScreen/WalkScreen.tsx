@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
-import { AppState } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { AppState, View } from 'react-native';
 import { Marker } from 'react-native-maps';
 import Map from '../../../.storybook/stories/Map/Map';
 import { usePermission } from '../../hook/usePermission';
 import { useGeoLocation } from '../../hook/useGeoLocation';
-
+import AddEventBtn from '../../../.storybook/stories/AddEventBtn/AddEventBtn';
+import BottomSheetComponent from '../../../.storybook/stories/BottomSheet/BottomSheetComponent';
+import { BottomSheetMethods } from '@devvie/bottom-sheet';
 interface MapLocationsEvents {
 	latitude: number;
 	longitude: number;
@@ -16,8 +18,16 @@ const WalkScreen = () => {
 
 	const { checkMapPermissions } = usePermission()
 	const { location } = useGeoLocation()
+	const ref = useRef<BottomSheetMethods>(null)
 
+	const onHandleOpen = () => {
+		ref.current?.open()
+	}
 
+	const onHandleClose = () => {
+		ref.current?.close()
+	}
+	
 	useEffect(() => {
 		AppState.addEventListener('change', state => {
 			if (state !== 'active') return
@@ -34,7 +44,7 @@ const WalkScreen = () => {
 	]
 
 	return (
-		<>
+		<View style={{ flex: 1 }}>
 			<Map
 				latitude={location.Latitude}
 				longitude={location.Longitude}
@@ -55,9 +65,27 @@ const WalkScreen = () => {
 					})
 				}
 			</Map>
-		</>
+			<AddEventBtn
+				action={onHandleOpen}
+				btnOpacity={0.9}
+				btnStyle={{
+					position: 'absolute',
+					bottom: 65,
+					right: 30,
+					height: 60,
+					width: 60,
+				}}
+			/>
+			<BottomSheetComponent
+				header="Add Event"
+				onHandleClose={onHandleClose}
+				sheetRef={ref}
+				footer="Everyone near you can be part of your event, have fun!"
+				textInputProps={{ placeholder: 'Event name' }}
+				textDescriptionInputProps={{placeholder:'Short Description'}}
+			/>
+		</View>
 	)
-
 };
 
 export default WalkScreen;

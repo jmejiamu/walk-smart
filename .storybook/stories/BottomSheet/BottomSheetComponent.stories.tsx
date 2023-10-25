@@ -6,6 +6,7 @@ import {BottomSheetMethods} from '@devvie/bottom-sheet';
 import ButtonComponent from '../Button/Button';
 
 const sheetRef = createRef<BottomSheetMethods>();
+
 const onHandleOpen = () => {
   sheetRef.current?.open();
 };
