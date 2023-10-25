@@ -16,7 +16,8 @@ const Map = (props: Props) => {
         <SafeAreaView style={[styles.container, props.mapContainerStyle]}>
             <MapView
                 showsUserLocation
-                provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
+                provider={PROVIDER_GOOGLE}
+                // provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                 style={[styles.map, props.mapStyle]}
                 region={{
                     latitude: props.latitude,
