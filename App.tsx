@@ -1,8 +1,9 @@
+import 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 import StorybookUIRoot from './.storybook';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import Auth from './src/auth/Auth';
+import Main from './src/Main/Main';
 
 // TODO: change this to 'false' so you have access to the main app.
 const SBLOADER = 'false';
@@ -10,7 +11,7 @@ const SBLOADER = 'false';
 const App = () => {
   return (
     <NavigationContainer theme={{colors: {background: 'white'}}}>
-      <Auth />
+      <Main />
     </NavigationContainer>
   );
 };
