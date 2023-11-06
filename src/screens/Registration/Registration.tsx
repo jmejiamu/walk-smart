@@ -1,28 +1,30 @@
+import React from 'react';
 import TextInputForm from '../../../.storybook/stories/Form/TextInputForm';
 import ButtonComponent from '../../../.storybook/stories/Button/Button';
-import {Text, View, TouchableOpacity} from 'react-native';
-import {userForm} from '../../auth/interfaces/interfaces';
-import {styles} from './styles';
-import React from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { styles } from './styles';
+import { userForm } from '../../interface/models';
 
 interface Props {
   onChange: (value: string, field: keyof userForm) => void;
   onHandleSubmit: () => void;
+  navigation: ()=> void;
 }
 
-const Registration = ({onChange, onHandleSubmit}: Props) => {
+const Registration = ({ onChange, onHandleSubmit, navigation }: Props) => {
+
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>LOGO</Text>
       <TextInputForm
         title="Full Name"
         textInputStyle={styles.input}
-        textInputMeta={{onChangeText: val => onChange(val, 'fullName')}}
+        textInputMeta={{ onChangeText: val => onChange(val, 'fullName') }}
       />
       <TextInputForm
         title="Email"
         textInputStyle={styles.input}
-        textInputMeta={{onChangeText: val => onChange(val, 'email')}}
+        textInputMeta={{ onChangeText: val => onChange(val, 'email') }}
       />
       <TextInputForm
         title="Password"
@@ -34,10 +36,9 @@ const Registration = ({onChange, onHandleSubmit}: Props) => {
       />
       <View style={styles.bottomContainer}>
         <ButtonComponent text="Register" onPress={() => onHandleSubmit()} />
-
-        <View style={styles.bottomInnerContainer}>
+        <View style={{...styles.bottomInnerContainer, marginVertical: 10 }}>
           <Text style={styles.doYouHaveAccount}>Do you have an account?</Text>
-          <TouchableOpacity style={{alignSelf: 'flex-end'}}>
+          <TouchableOpacity onPress={navigation} style={{ alignSelf: 'flex-end' }}>
             <Text> Sign in</Text>
           </TouchableOpacity>
         </View>

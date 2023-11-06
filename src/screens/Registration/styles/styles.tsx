@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   doYouHaveAccount: {
-    marginTop: 10,
     color: colors.color_600,
   },
   input: {
