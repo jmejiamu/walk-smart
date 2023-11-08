@@ -6,14 +6,14 @@ export interface userForm {
 }
 
 export interface Auth {
-    error?: boolean;
-    record?: Record;
+    error: boolean;
+    record: Record;
 }
 
 export interface Record {
-    user_id?: string;
-    username?: string;
-    created?: string;
-    fail?: boolean;
-    token?: string;
+    user_id: string;
+    username: string;
+    created: string;
+    fail: boolean;
+    token: string;
 }

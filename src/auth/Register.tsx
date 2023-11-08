@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Registration from '../screens/Registration/Registration';
 import { useForm } from '../hook/useForm';
 import { View } from 'react-native';
@@ -22,6 +22,9 @@ const Register = ({ navigation }: Props) => {
     }
   });
 
+  // this will be remove when I add state management Context API
+  const [ctx, setCxt] = useState({})
+
   const { onChange, form } = useForm<userForm>({
     fullName: '',
     email: '',
@@ -29,8 +32,9 @@ const Register = ({ navigation }: Props) => {
   });
 
   const navigationScreen = () => {
-    navigation.navigate('Signin', {})
+    navigation.navigate('Signin', auth)
   }
+
   const registration = async () => {
     try {
       const res = await fetch('http://localhost:8080/api-v1/register', {
@@ -47,6 +51,16 @@ const Register = ({ navigation }: Props) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+
+    setCxt(auth) // this will be change when add state management
+    if (!auth.error) {
+      navigation.navigate('Walkin', auth)
+    }
+
+  }, [auth, ctx, setAuth])
+
 
   console.log(auth);
 

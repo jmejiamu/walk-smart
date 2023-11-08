@@ -24,7 +24,10 @@ const Registration = ({ onChange, onHandleSubmit, navigation }: Props) => {
       <TextInputForm
         title="Email"
         textInputStyle={styles.input}
-        textInputMeta={{ onChangeText: val => onChange(val, 'email') }}
+        textInputMeta={{ 
+          autoCapitalize:'none',
+          onChangeText: val => onChange(val, 'email') 
+        }}
       />
       <TextInputForm
         title="Password"

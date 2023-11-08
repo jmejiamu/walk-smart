@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStacksParams } from '../Main/Main';
@@ -13,7 +13,7 @@ interface Props extends StackScreenProps<RootStacksParams, 'Signin'> { }
 
 const Signin = ({ navigation }: Props) => {
 
-	const [data, setData] = useState<Auth>({
+	const [authInfo, setAuthInfo] = useState<Auth>({
 		error: true,
 		record: {
 			created: '',
@@ -24,12 +24,14 @@ const Signin = ({ navigation }: Props) => {
 		}
 	});
 
+	const [ctx, setCtx] = useState({})
+
 	const { form, onChange } = useForm<userForm>({
 		email: '',
 		password: ''
 	})
 
-	const signinUser = async () => {
+	const userSignin = async () => {
 		try {
 			const res = await fetch('http://localhost:8080/api-v1/signin', {
 				method: 'POST',
@@ -38,15 +40,26 @@ const Signin = ({ navigation }: Props) => {
 				},
 				body: JSON.stringify(form),
 			});
+			if (!res.ok) {
+				return
+			}
 			const data = await res.json();
-			setData(data)
+			setAuthInfo(data)
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
+	useEffect(() => {
 
-	console.log(data);
+		setCtx(authInfo)// context api set later
+		if (!authInfo.error) { // add property for checkin signin AND register
+			navigation.navigate('Walkin', authInfo)
+		}
+
+	}, [authInfo, ctx, setCtx])
+
+
 
 
 	return (
@@ -57,7 +70,8 @@ const Signin = ({ navigation }: Props) => {
 					title="Email"
 					textInputStyle={styles.input}
 					textInputMeta={{
-						onChangeText: (val) => onChange(val, 'email')
+						autoCapitalize: 'none',
+						onChangeText: val => onChange(val, 'email')
 					}}
 				/>
 				<TextInputForm
@@ -65,14 +79,14 @@ const Signin = ({ navigation }: Props) => {
 					textInputStyle={styles.input}
 					textInputMeta={{
 						secureTextEntry: true,
-						onChangeText: (val) => onChange(val, 'password')
+						onChangeText: val => onChange(val, 'password')
 					}}
 				/>
 				<View style={styles.bottomContainer}>
-					<ButtonComponent text="Signin" onPress={signinUser} />
+					<ButtonComponent text="Signin" onPress={userSignin} />
 					<View style={{ ...styles.bottomInnerContainer, marginVertical: 10 }}>
 						<Text style={styles.doYouHaveAccount}>I do not you have an account!</Text>
-						<TouchableOpacity onPress={() => navigation.navigate('Register', {})} style={{ alignSelf: 'flex-end' }}>
+						<TouchableOpacity onPress={() => navigation.navigate('Register', authInfo)} style={{ alignSelf: 'flex-end' }}>
 							<Text> Register </Text>
 						</TouchableOpacity>
 					</View>
