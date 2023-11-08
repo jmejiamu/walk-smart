@@ -7,6 +7,8 @@ import { useGeoLocation } from '../../hook/useGeoLocation';
 import AddEventBtn from '../../../.storybook/stories/AddEventBtn/AddEventBtn';
 import BottomSheetComponent from '../../../.storybook/stories/BottomSheet/BottomSheetComponent';
 import { BottomSheetMethods } from '@devvie/bottom-sheet';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStacksParams } from '../../Main/Main';
 interface MapLocationsEvents {
 	latitude: number;
 	longitude: number;
@@ -15,6 +17,8 @@ interface MapLocationsEvents {
 }
 
 const WalkScreen = () => {
+
+	const route  = useRoute<RouteProp<RootStacksParams>>()
 
 	const { checkMapPermissions } = usePermission()
 	const { location } = useGeoLocation()
@@ -42,7 +46,10 @@ const WalkScreen = () => {
 		{ latitude: 37.7921, longitude: -122.3958, eventTitle: 'Visit test', eventDescription: 'Join our reading Walk event 43434' },
 		{ latitude: 37.7934, longitude: -122.3988, eventTitle: 'THIS IS A TEST', eventDescription: 'THIS IS EVENTENT DEV HELLO WORLD' }
 	]
-
+	
+	
+	console.log(route);
+	
 	return (
 		<View style={{ flex: 1 }}>
 			<Map

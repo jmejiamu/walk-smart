@@ -9,7 +9,7 @@ import { Auth } from "../interface/models";
 export type RootStacksParams = {
     Signin: Auth;
     Register: Auth;
-    Bottom: {},
+    Walkin: Auth,
 }
 
 const Stack = createStackNavigator<RootStacksParams>();
@@ -23,7 +23,7 @@ const Main = () => {
             >
                 <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Signin" component={Signin} />
-                <Stack.Screen name="Bottom" component={BottomNav} />
+                <Stack.Screen name="Walkin" component={BottomNav} />
             </Stack.Navigator>
         </>
     )
