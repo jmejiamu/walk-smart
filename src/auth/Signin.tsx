@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStacksParams } from '../Main/Main';
-import { styles } from "../screens/Registration/styles";
+import { styles } from "./styles";
 import TextInputForm from "../../.storybook/stories/Form/TextInputForm";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ButtonComponent from "../../.storybook/stories/Button/Button";
 import { Auth, userForm } from "../interface/models";
 import { useForm } from "../hook/useForm";
+import { useFetch } from "../hook/useFetch";
 
 interface Props extends StackScreenProps<RootStacksParams, 'Signin'> { }
 
 const Signin = ({ navigation }: Props) => {
 
-	const [authInfo, setAuthInfo] = useState<Auth>({
+	const { datas, fetcheer } = useFetch<Auth>({
 		error: true,
 		record: {
 			created: '',
@@ -22,45 +23,32 @@ const Signin = ({ navigation }: Props) => {
 			user_id: '',
 			username: ''
 		}
-	});
+	})
 
-	const [ctx, setCtx] = useState({})
 
 	const { form, onChange } = useForm<userForm>({
 		email: '',
 		password: ''
 	})
 
-	const userSignin = async () => {
-		try {
-			const res = await fetch('http://localhost:8080/api-v1/signin', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(form),
-			});
-			if (!res.ok) {
-				return
-			}
-			const data = await res.json();
-			setAuthInfo(data)
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	const userSignin = () => {
+		fetcheer('http://localhost:8080/api-v1/signin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(form)
+		})
+
+	}
 
 	useEffect(() => {
-
-		setCtx(authInfo)// context api set later
-		if (!authInfo.error) { // add property for checkin signin AND register
-			navigation.navigate('Walkin', authInfo)
+		// setCtx(data) // here is api context
+		if (!datas.error) {
+			navigation.navigate('Walkin', datas)
 		}
 
-	}, [authInfo, ctx, setCtx])
-
-
-
+	}, [datas])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -86,7 +74,7 @@ const Signin = ({ navigation }: Props) => {
 					<ButtonComponent text="Signin" onPress={userSignin} />
 					<View style={{ ...styles.bottomInnerContainer, marginVertical: 10 }}>
 						<Text style={styles.doYouHaveAccount}>I do not you have an account!</Text>
-						<TouchableOpacity onPress={() => navigation.navigate('Register', authInfo)} style={{ alignSelf: 'flex-end' }}>
+						<TouchableOpacity onPress={() => navigation.navigate('Register', datas)} style={{ alignSelf: 'flex-end' }}>
 							<Text> Register </Text>
 						</TouchableOpacity>
 					</View>
