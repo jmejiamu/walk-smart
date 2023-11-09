@@ -15,7 +15,7 @@ interface Props extends StackScreenProps<RootStacksParams, 'Register'> { }
 
 const Register = ({ navigation }: Props) => {
 
-	const { datas, fetcheer } = useFetch<Auth>({
+	const { data, fetcheer } = useFetch<Auth>({
 		error: true,
 		record:{
 			created:'',
@@ -45,11 +45,11 @@ const Register = ({ navigation }: Props) => {
 
 	useEffect(() => {
 		// setData() // this will be change when add state management
-		if (!datas.error) {
-			navigation.navigate('Walkin', datas)
+		if (!data.error) {
+			navigation.navigate('Walkin', data)
 		}
 
-	}, [datas])
+	}, [data])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -81,7 +81,7 @@ const Register = ({ navigation }: Props) => {
 					<ButtonComponent text="Register" onPress={registration} />
 					<View style={{ ...styles.bottomInnerContainer, marginVertical: 10 }}>
 						<Text style={styles.doYouHaveAccount}>Do you have an account?</Text>
-						<TouchableOpacity onPress={() => navigation.navigate('Signin', datas)} style={{ alignSelf: 'flex-end' }}>
+						<TouchableOpacity onPress={() => navigation.navigate('Signin', data)} style={{ alignSelf: 'flex-end' }}>
 							<Text> Sign in</Text>
 						</TouchableOpacity>
 					</View>
