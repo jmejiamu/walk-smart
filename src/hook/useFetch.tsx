@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-export const useFetch = <T extends any>(data: T) => {
+export const useFetch = <T extends any>(dataType: T) => {
 
-    const [datas, setData] = useState(data)
+    const [data, setData] = useState(dataType)
 
     const fetcheer = async (targetUrl: string, headers?: RequestInit) => {
         try {
@@ -18,7 +18,7 @@ export const useFetch = <T extends any>(data: T) => {
 
     return {
         fetcheer,
-        datas
+        data
     }
 }
 

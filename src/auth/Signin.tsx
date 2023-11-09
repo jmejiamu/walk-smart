@@ -14,7 +14,7 @@ interface Props extends StackScreenProps<RootStacksParams, 'Signin'> { }
 
 const Signin = ({ navigation }: Props) => {
 
-	const { datas, fetcheer } = useFetch<Auth>({
+	const { data, fetcheer } = useFetch<Auth>({
 		error: true,
 		record: {
 			created: '',
@@ -44,11 +44,11 @@ const Signin = ({ navigation }: Props) => {
 
 	useEffect(() => {
 		// setCtx(data) // here is api context
-		if (!datas.error) {
-			navigation.navigate('Walkin', datas)
+		if (!data.error) {
+			navigation.navigate('Walkin', data)
 		}
 
-	}, [datas])
+	}, [data])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -74,7 +74,7 @@ const Signin = ({ navigation }: Props) => {
 					<ButtonComponent text="Signin" onPress={userSignin} />
 					<View style={{ ...styles.bottomInnerContainer, marginVertical: 10 }}>
 						<Text style={styles.doYouHaveAccount}>I do not you have an account!</Text>
-						<TouchableOpacity onPress={() => navigation.navigate('Register', datas)} style={{ alignSelf: 'flex-end' }}>
+						<TouchableOpacity onPress={() => navigation.navigate('Register', data)} style={{ alignSelf: 'flex-end' }}>
 							<Text> Register </Text>
 						</TouchableOpacity>
 					</View>

@@ -7,20 +7,20 @@ import { useGeoLocation } from '../../hook/useGeoLocation';
 import AddEventBtn from '../../../.storybook/stories/AddEventBtn/AddEventBtn';
 import BottomSheetComponent from '../../../.storybook/stories/BottomSheet/BottomSheetComponent';
 import { BottomSheetMethods } from '@devvie/bottom-sheet';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStacksParams } from '../../Main/Main';
-interface MapLocationsEvents {
-	latitude: number;
-	longitude: number;
-	eventTitle: string;
-	eventDescription: string
-}
+import { useFetch } from '../../hook/useFetch';
+import { Events } from '../../interface/models';
 
 const WalkScreen = () => {
 
-	const route  = useRoute<RouteProp<RootStacksParams>>()
 
 	const { checkMapPermissions } = usePermission()
+
+	const { data, fetcheer } = useFetch<Events>({
+		error: true,
+		message: '',
+		events: []
+	});
+
 	const { location } = useGeoLocation()
 	const ref = useRef<BottomSheetMethods>(null)
 
@@ -31,25 +31,20 @@ const WalkScreen = () => {
 	const onHandleClose = () => {
 		ref.current?.close()
 	}
-	
+
+	useEffect(()=>{
+		fetcheer('http://localhost:8080/api-v1/events/all')
+	},[])
+
 	useEffect(() => {
 		AppState.addEventListener('change', state => {
 			if (state !== 'active') return
 			checkMapPermissions();
 		})
+
 	}, [])
 
-	// NOTE: This is a test events
-	const eventsList: MapLocationsEvents[] = [
-		{ latitude: 37.7939, longitude: -122.3970, eventTitle: 'Best place', eventDescription: 'Hello this is a greate place 123' },
-		{ latitude: 37.7916, longitude: -122.3966, eventTitle: 'Visit us', eventDescription: 'Join our reading Walk event' },
-		{ latitude: 37.7921, longitude: -122.3958, eventTitle: 'Visit test', eventDescription: 'Join our reading Walk event 43434' },
-		{ latitude: 37.7934, longitude: -122.3988, eventTitle: 'THIS IS A TEST', eventDescription: 'THIS IS EVENTENT DEV HELLO WORLD' }
-	]
-	
-	
-	console.log(route);
-	
+
 	return (
 		<View style={{ flex: 1 }}>
 			<Map
@@ -57,7 +52,7 @@ const WalkScreen = () => {
 				longitude={location.Longitude}
 			>
 				{
-					eventsList.map((event, i) => {
+					data.events.map((event, i) => {
 						return (
 							<Marker
 								key={i}
@@ -65,8 +60,8 @@ const WalkScreen = () => {
 									latitude: event.latitude,
 									longitude: event.longitude
 								}}
-								title={event.eventTitle}
-								description={event.eventDescription}
+								title={event.event_title}
+								description={event.event_description}
 							/>
 						)
 					})
@@ -89,7 +84,7 @@ const WalkScreen = () => {
 				sheetRef={ref}
 				footer="Everyone near you can be part of your event, have fun!"
 				textInputProps={{ placeholder: 'Event name' }}
-				textDescriptionInputProps={{placeholder:'Short Description'}}
+				textDescriptionInputProps={{ placeholder: 'Short Description' }}
 			/>
 		</View>
 	)
