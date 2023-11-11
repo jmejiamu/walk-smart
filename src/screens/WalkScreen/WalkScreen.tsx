@@ -8,7 +8,8 @@ import AddEventBtn from '../../../.storybook/stories/AddEventBtn/AddEventBtn';
 import BottomSheetComponent from '../../../.storybook/stories/BottomSheet/BottomSheetComponent';
 import { BottomSheetMethods } from '@devvie/bottom-sheet';
 import { useFetch } from '../../hook/useFetch';
-import { Events } from '../../interface/models';
+import { Event, Events } from '../../interface/models';
+import { useForm } from '../../hook/useForm';
 
 const WalkScreen = () => {
 
@@ -22,6 +23,15 @@ const WalkScreen = () => {
 	});
 
 	const { location } = useGeoLocation()
+
+	const { form, onChange } = useForm<Event>({
+		user_id: 'a058bb5a-fe79-46d4-9d1c-7ec5a8773c91', // this will replace when user login or register 
+		event_title: '',
+		event_description: '',
+		latitude:  0,
+		longitude: 0,
+	})
+
 	const ref = useRef<BottomSheetMethods>(null)
 
 	const onHandleOpen = () => {
@@ -29,12 +39,24 @@ const WalkScreen = () => {
 	}
 
 	const onHandleClose = () => {
+
+		const bodyRequest = {...form, latitude : location.Latitude, longitude : location.Longitude}
+		
+		fetcheer('http://localhost:8080/api-v1/events', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Cache-control': 'no-cache'
+			},
+			body: JSON.stringify(bodyRequest)
+		})
 		ref.current?.close()
 	}
 
-	useEffect(()=>{
+
+	useEffect(() => {
 		fetcheer('http://localhost:8080/api-v1/events/all')
-	},[])
+	}, [])
 
 	useEffect(() => {
 		AppState.addEventListener('change', state => {
@@ -52,6 +74,7 @@ const WalkScreen = () => {
 				longitude={location.Longitude}
 			>
 				{
+					data.events &&
 					data.events.map((event, i) => {
 						return (
 							<Marker
@@ -83,8 +106,14 @@ const WalkScreen = () => {
 				onHandleClose={onHandleClose}
 				sheetRef={ref}
 				footer="Everyone near you can be part of your event, have fun!"
-				textInputProps={{ placeholder: 'Event name' }}
-				textDescriptionInputProps={{ placeholder: 'Short Description' }}
+				textInputProps={{
+					placeholder: 'Event name',
+					onChangeText: value => onChange(value, 'event_title')
+				}}
+				textDescriptionInputProps={{
+					placeholder: 'Short Description',
+					onChangeText: value => onChange(value, 'event_description')
+				}}
 			/>
 		</View>
 	)
