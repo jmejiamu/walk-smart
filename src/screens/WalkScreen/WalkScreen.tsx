@@ -80,8 +80,8 @@ const WalkScreen = () => {
 							<Marker
 								key={i}
 								coordinate={{
-									latitude: event.latitude,
-									longitude: event.longitude
+									latitude: event.latitude || 0,
+									longitude: event.longitude || 0,
 								}}
 								title={event.event_title}
 								description={event.event_description}

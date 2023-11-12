@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, TextInput, StyleSheet, ViewStyle, TextStyle} from 'react-native';
+import React, {Dispatch, SetStateAction, } from 'react';
+import {View, TextInput, ViewStyle, TextStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { styles } from "./styles";
 import {colors} from '../../../src/theme';
@@ -9,6 +9,8 @@ interface Props {
   iconColor?: string;
   searchBarStyle?: TextStyle;
   textPlaceHolder?: string;
+  action: Dispatch<SetStateAction<string>>;
+  textValue: string;
 }
 
 const Search = (props: Props) => {
@@ -16,10 +18,10 @@ const Search = (props: Props) => {
     container,
     iconColor = colors.color_100,
     searchBarStyle,
+    action,
+    textValue,
     textPlaceHolder = 'Search...',
   } = props;
-
-  const [text, setText] = useState('');
 
   return (
     <View style={[styles.mainContainer, container]}>
@@ -31,8 +33,8 @@ const Search = (props: Props) => {
       />
       <TextInput
         style={[styles.searchBarStyle, searchBarStyle]}
-        onChangeText={setText}
-        value={text}
+        onChangeText={action}
+        value={textValue}
         placeholder={textPlaceHolder}
       />
     </View>
