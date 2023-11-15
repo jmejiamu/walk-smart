@@ -3,13 +3,15 @@ import { createStackNavigator } from "@react-navigation/stack"
 // import Register from "../auth/Register";
 import BottomNav from "../navigation/BottomNav/BottomNav";
 import { Auth } from "../interface/models";
+import { EventScreen } from "../screens";
 
 
 
 export type RootStacksParams = {
     Signin: Auth;
     Register: Auth;
-    Walkin: Auth,
+    Walkin: Auth;
+    Event: Auth;
 }
 
 const Stack = createStackNavigator<RootStacksParams>();
@@ -23,6 +25,7 @@ const Main = () => {
             >
                 {/* <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Signin" component={Signin} /> */}
+                <Stack.Screen name="Event" component={EventScreen} />
                 <Stack.Screen name="Walkin" component={BottomNav} />
             </Stack.Navigator>
         </>
