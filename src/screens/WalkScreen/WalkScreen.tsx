@@ -28,7 +28,7 @@ const WalkScreen = () => {
 		user_id: 'a058bb5a-fe79-46d4-9d1c-7ec5a8773c91', // this will replace when user login or register 
 		event_title: '',
 		event_description: '',
-		latitude:  0,
+		latitude: 0,
 		longitude: 0,
 	})
 
@@ -40,8 +40,8 @@ const WalkScreen = () => {
 
 	const onHandleClose = () => {
 
-		const bodyRequest = {...form, latitude : location.Latitude, longitude : location.Longitude}
-		
+		const bodyRequest = { ...form, latitude: location.Latitude, longitude: location.Longitude }
+
 		fetcheer('http://localhost:8080/api-v1/events', {
 			method: 'POST',
 			headers: {

@@ -6,9 +6,9 @@ import {
 } from 'react-native';
 import { styles } from "./styles";
 interface Props {
-  eventName: string;
-  badge: JSX.Element;
-  imageUrl: string;
+  eventName?: string;
+  badge?: JSX.Element;
+  imageUrl?: string;
 }
 
 const EventHeader = (props: Props) => {
@@ -18,7 +18,7 @@ const EventHeader = (props: Props) => {
       <ImageBackground
         imageStyle={styles.bckImage}
         style={styles.image}
-        source={{uri: imageUrl}}>
+        source={{uri: imageUrl || "https://picsum.photos/600/600"}}>
         <View style={styles.rightElemContainer}>
           <>{badge}</>
         </View>

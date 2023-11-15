@@ -1,18 +1,21 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { styles } from "./styles";
 interface DefProps {
-  text: string;
+  text: React.ReactNode;
   onPress: () => void;
 }
 
-const ButtonComponent = ({onPress, text}: DefProps) => {
+const ButtonComponent = ({ onPress, text }: DefProps) => {
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={onPress}
       activeOpacity={0.8}>
-      <Text style={styles.text}>{text}</Text>
+
+      {typeof "string" ?
+        <Text style={styles.text}>{text}</Text>
+        : text}
     </TouchableOpacity>
   );
 };
