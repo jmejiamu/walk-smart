@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import ListCard from '../../../.storybook/stories/ListCard/ListCard';
 import Search from '../../../.storybook/stories/Search/Search';
 import { Event, Events } from '../../interface/models';
 import { useFetch } from '../../hook/useFetch';
+import { useNavigation } from '@react-navigation/native';
+import { Navigation } from '../../Main/Main';
 
-interface Props extends Event {
+interface SearchProps extends Event {
 	searchEvent: string;
 }
 
 const CardEventRender = ({ event_title, time_stamp, event_id }: Event) => {
+	
+	const nav = useNavigation<Navigation>()
+	
 	return (
 		<View>
-			<View style={{ marginTop: 10 }} />
-			<ListCard key={event_id} EventName={event_title} Date={time_stamp?.toString()} />
+			<TouchableOpacity activeOpacity={0.7}  onPress={()=> nav.navigate('Event', {event_id})}>
+				<View style={{ marginTop: 10 }} />
+				<ListCard key={event_id} EventName={event_title} Date={time_stamp?.toString()} />
+			</TouchableOpacity>
 		</View>
 	)
 }
 
-const SearchEventRender = ({ searchEvent, event_title, time_stamp, event_id }: Props) => {
+const SearchEventRender = ({ searchEvent, event_title, time_stamp, event_id }: SearchProps) => {
 
 	if (event_title?.toUpperCase().includes(searchEvent.toLocaleUpperCase())) {
 		return (
