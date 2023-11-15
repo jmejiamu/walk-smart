@@ -17,12 +17,17 @@ export interface Record {
     fail: boolean;
     token: string;
 }
-
-// all events models
+// list all events 
 export interface Events {
     error: boolean;
     message: string;
     events: Event[];
+}
+export interface EventInfo {
+    error:    boolean;
+    recived:  string;
+    event_id: string;
+    event:    Event[];
 }
 
 export interface Event {
