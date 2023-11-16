@@ -24,16 +24,24 @@ export interface Events {
     events: Event[];
 }
 export interface EventInfo {
-    error:    boolean;
-    recived:  string;
+    error: boolean;
+    recived: string;
     event_id: string;
-    event:    Event[];
+    event: Event[];
+}
+
+// for all events created by user display on profile
+export interface MyEvents {
+    error: boolean,
+    recived: string;
+    user_id: string;
+    myEvents: Event[];
 }
 
 export interface Event {
     event_id?: string;
     user_id?: string;
-    event_title?: string;
+    event_title: string;
     event_description?: string;
     latitude?: number;
     longitude?: number;
