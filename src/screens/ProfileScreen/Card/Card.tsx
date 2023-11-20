@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native"
 import JoinCard from "../../../../.storybook/stories/JoinCard/JoinCard"
-// import { Events } from "./interface";
 import { colors } from "../../../theme";
 import { Event } from "../../../interface/models";
+import useDateFormat from "../../../hook/useDateFormat";
 
 const Badge = () => {
     return (
@@ -14,19 +14,21 @@ const Badge = () => {
 };
 
 const Card = ({ data }: { data: Event }) => {
-    console.log(data);
-    
+
+
+    const { formater } = useDateFormat()
+
     return (
         <JoinCard
             key={data.event_id}
-            isLive={true}
+            isLive={false}
             bage={<Badge />}
             containerStyle={{ marginHorizontal: 30, marginVertical: 15 }}
             titleStyle={{ fontSize: 18 }}
             title={data.event_title}
             likes={90}
             joined={53}
-            joinedDate={data.time_stamp}
+            joinedDate={formater(data.time_stamp, { month: 'short', day: 'numeric', year: 'numeric' })}
         />
     )
 }

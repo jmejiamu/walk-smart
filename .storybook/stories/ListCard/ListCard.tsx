@@ -3,7 +3,7 @@ import { View, Text,  StyleProp, ViewStyle  } from "react-native";
 import { styles } from "./styles";
 interface Props {
     EventName?: string;
-    Date?: string;
+    Date: string;
     Location?: string;
     AvatarStyle?: StyleProp<ViewStyle>;
     DescStyle?: StyleProp<ViewStyle>;

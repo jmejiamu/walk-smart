@@ -6,20 +6,22 @@ import { Event, Events } from '../../interface/models';
 import { useFetch } from '../../hook/useFetch';
 import { useNavigation } from '@react-navigation/native';
 import { Navigation } from '../../Main/Main';
+import useDateFormat from '../../hook/useDateFormat';
 
 interface SearchProps extends Event {
 	searchEvent: string;
 }
 
 const CardEventRender = ({ event_title, time_stamp, event_id }: Event) => {
+	const { formater } = useDateFormat()
 	
 	const nav = useNavigation<Navigation>()
-	
+
 	return (
 		<View>
-			<TouchableOpacity activeOpacity={0.7}  onPress={()=> nav.navigate('Event', {event_id})}>
+			<TouchableOpacity activeOpacity={0.7} onPress={() => nav.navigate('Event', { event_id })}>
 				<View style={{ marginTop: 10 }} />
-				<ListCard key={event_id} EventName={event_title} Date={time_stamp?.toString()} />
+				<ListCard key={event_id} EventName={event_title} Date={formater(time_stamp, { month: 'short', day: 'numeric', year: 'numeric', hour:'2-digit' })} />
 			</TouchableOpacity>
 		</View>
 	)
@@ -27,14 +29,17 @@ const CardEventRender = ({ event_title, time_stamp, event_id }: Event) => {
 
 const SearchEventRender = ({ searchEvent, event_title, time_stamp, event_id }: SearchProps) => {
 
-	if (event_title?.toUpperCase().includes(searchEvent.toLocaleUpperCase())) {
+	if (event_title?.toUpperCase().includes(searchEvent.toUpperCase())) {
+
 		return (
 			<>
 				<CardEventRender key={event_id} event_title={event_title} time_stamp={time_stamp} />
 			</>
 		)
 	}
-	if (time_stamp?.toString().includes(searchEvent)) {
+
+	if (time_stamp?.toUpperCase().includes(searchEvent.toUpperCase())) {
+
 		return (
 			<>
 				<CardEventRender key={event_id} event_title={event_title} time_stamp={time_stamp} />

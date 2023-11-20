@@ -45,6 +45,6 @@ export interface Event {
     event_description?: string;
     latitude?: number;
     longitude?: number;
-    time_stamp?: Date;
+    time_stamp: string;
 }
 
