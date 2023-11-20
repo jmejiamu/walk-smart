@@ -1,25 +1,32 @@
+import { useEffect } from "react";
 import { FlatList, Platform, View } from "react-native"
-import { Events } from "../Card/interface";
 import Card from "../Card/Card";
+import { MyEvents } from "../../../interface/models";
+import { useFetch } from "../../../hook/useFetch";
 
 const JoinedScreen = () => {
-    const events: Events[] = [
-        { id: 1, EventName: 'Programming Fundamentals', Joined: 53, Likes: 354, Date: 'Oct 24, 2023' },
-        { id: 2, EventName: 'Reading & Writting ESL', Joined: 50, Likes: 205, Date: 'Oct 12, 2023' },
-        { id: 3, EventName: 'React Native Application', Joined: 60, Likes: 25, Date: 'Oct 12, 2023' },
-        { id: 4, EventName: 'Spanish Class Event', Joined: 50, Likes: 205, Date: 'Oct 13, 2023' },
-        { id: 5, EventName: 'Culture, Art Presentaion', Joined: 150, Likes: 253, Date: 'Oct 21, 2023' },
-        { id: 6, EventName: 'Full-stack development', Joined: 230, Likes: 205, Date: 'Oct 9, 2023' },
-    ]
+    // this is a test endpoit will change when add joined events endpoint
+    const { data, fetcheer } = useFetch<MyEvents>({
+        error: true,
+        recived: '',
+        user_id: '',
+        myEvents: []
+    })
+
+    useEffect(() => {
+        fetcheer(`http://localhost:8080/api-v1/events/all/me?user_id=b67b8a34-85e6-41bf-a725-d9edd829bc7c`)
+    }, [])
+
+
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             <FlatList
-                showsVerticalScrollIndicator={false} 
-                style={{ marginBottom: Platform.OS === 'android' ? 40: 50 }}
-                data={events}
+                showsVerticalScrollIndicator={false}
+                style={{ marginBottom: Platform.OS === 'android' ? 40 : 50 }}
+                data={data.myEvents}
                 renderItem={({ item }) => <Card data={item} />}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.event_id ?? 'unknow'}
             />
         </View>
     )

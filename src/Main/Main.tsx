@@ -10,7 +10,7 @@ export type RootStacksParams = {
     Signin: Auth;
     Register: Auth;
     Walkin: Auth;
-    Event: Event;
+    Event: {event_id?: string};
     Events: Auth
 }
 
