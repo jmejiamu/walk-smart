@@ -7,7 +7,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyD0wQgSzIeOmjORqtvk8zxyAyHPWBVA--k"];
+  [GMSServices provideAPIKey:@"API-KEY"];
   self.moduleName = @"WalkSmart";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
