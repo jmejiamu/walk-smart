@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStacksParams } from '../Main/Main';
@@ -9,11 +9,12 @@ import ButtonComponent from "../../.storybook/stories/Button/Button";
 import { Auth, userForm } from "../interface/models";
 import { useForm } from "../hook/useForm";
 import { useFetch } from "../hook/useFetch";
+import Alert from "../../.storybook/stories/Alert/Alert";
 
 interface Props extends StackScreenProps<RootStacksParams, 'Signin'> { }
 
 const Signin = ({ navigation }: Props) => {
-
+	const [isEmpty, setIsEmpty] = useState(false)
 	const { data, fetcheer } = useFetch<Auth>({
 		error: true,
 		record: {
@@ -25,21 +26,24 @@ const Signin = ({ navigation }: Props) => {
 		}
 	})
 
-
-	const { form, onChange } = useForm<userForm>({
+	const { form, onChange, checkEmptyField, cleanFormState } = useForm<userForm>({
 		email: '',
 		password: ''
 	})
 
 	const userSignin = () => {
-		fetcheer('http://localhost:8080/api-v1/signin', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(form)
-		})
-
+		const isEmpty: boolean = checkEmptyField(form)
+		if (!isEmpty) {
+			fetcheer('http://localhost:8080/api-v1/signin', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(form)
+			})
+			cleanFormState()
+		}
+		setIsEmpty(isEmpty)
 	}
 
 	useEffect(() => {
@@ -58,6 +62,7 @@ const Signin = ({ navigation }: Props) => {
 					title="Email"
 					textInputStyle={styles.input}
 					textInputMeta={{
+						value: form.email,
 						autoCapitalize: 'none',
 						onChangeText: val => onChange(val, 'email')
 					}}
@@ -66,6 +71,7 @@ const Signin = ({ navigation }: Props) => {
 					title="Password"
 					textInputStyle={styles.input}
 					textInputMeta={{
+						value: form.password,
 						secureTextEntry: true,
 						onChangeText: val => onChange(val, 'password')
 					}}
@@ -78,6 +84,7 @@ const Signin = ({ navigation }: Props) => {
 							<Text> Register </Text>
 						</TouchableOpacity>
 					</View>
+					{isEmpty && <Alert Message='Required fields are empty' />}
 				</View>
 			</View>
 		</View>
