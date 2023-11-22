@@ -30,6 +30,7 @@ const WalkScreen = () => {
 		event_description: '',
 		latitude: 0,
 		longitude: 0,
+		time_stamp: ''
 	})
 
 	const ref = useRef<BottomSheetMethods>(null)

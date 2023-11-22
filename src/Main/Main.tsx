@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack"
-// import Signin from "../auth/Signin";
-// import Register from "../auth/Register";
+import Signin from "../auth/Signin";
+import Register from "../auth/Register";
 import BottomNav from "../navigation/BottomNav/BottomNav";
-import { Auth, Event } from "../interface/models";
+import { Auth } from "../interface/models";
 import { EventScreen } from "../screens";
 import { NavigationProp } from "@react-navigation/native";
 
@@ -26,8 +26,8 @@ const Main = () => {
                     headerShown: false
                 }}
             >
-                {/* <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen name="Signin" component={Signin} /> */}
+                <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="Signin" component={Signin} />
                 <Stack.Screen name="Walkin" component={BottomNav} />
                 <Stack.Screen name="Event" component={EventScreen} />
             </Stack.Navigator>

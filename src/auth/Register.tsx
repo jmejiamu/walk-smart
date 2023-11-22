@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hook/useForm';
 import { useFetch } from '../hook/useFetch';
-import {  Auth, userForm } from '../interface/models';
+import { Auth, userForm } from '../interface/models';
 import { RootStacksParams } from '../Main/Main';
 import TextInputForm from '../../.storybook/stories/Form/TextInputForm';
 import ButtonComponent from '../../.storybook/stories/Button/Button';
+import Alert from '../../.storybook/stories/Alert/Alert';
 import { styles } from './styles';
 
 
@@ -15,31 +16,38 @@ interface Props extends StackScreenProps<RootStacksParams, 'Register'> { }
 
 const Register = ({ navigation }: Props) => {
 
+	const [isEmpty, setEmpty] = useState(false);
 	const { data, fetcheer } = useFetch<Auth>({
 		error: true,
-		record:{
-			created:'',
+		record: {
+			created: '',
 			fail: true,
-			token:'',
-			user_id:'',
-			username:''
+			token: '',
+			user_id: '',
+			username: ''
 		}
 	})
 
-	const { onChange, form } = useForm<userForm>({
+	const { onChange, checkEmptyField, cleanFormState, form } = useForm<userForm>({
 		fullName: '',
 		email: '',
 		password: '',
 	});
 
 	const registration = () => {
-		fetcheer('http://localhost:8080/api-v1/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(form),
-		})
+		const isEmpty: boolean = checkEmptyField(form)
+		if (!isEmpty) {
+			fetcheer('http://localhost:8080/api-v1/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(form),
+			})
+			cleanFormState()
+		}
+
+		setEmpty(isEmpty)
 
 	};
 
@@ -54,17 +62,21 @@ const Register = ({ navigation }: Props) => {
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={styles.container}>
-			<Text style={styles.logo}> LOGO </Text>
+				<Text style={styles.logo}> LOGO </Text>
 				<TextInputForm
 					title="Full Name"
 					textInputStyle={styles.input}
-					textInputMeta={{ onChangeText: val => onChange(val, 'fullName') }}
+					textInputMeta={{
+						value: form.fullName,
+						onChangeText: val => onChange(val, 'fullName')
+					}}
 				/>
 
 				<TextInputForm
 					title="Email"
 					textInputStyle={styles.input}
 					textInputMeta={{
+						value: form.email,
 						autoCapitalize: 'none',
 						onChangeText: val => onChange(val, 'email')
 					}}
@@ -73,6 +85,7 @@ const Register = ({ navigation }: Props) => {
 					title="Password"
 					textInputStyle={styles.input}
 					textInputMeta={{
+						value: form.password,
 						secureTextEntry: true,
 						onChangeText: val => onChange(val, 'password'),
 					}}
@@ -85,6 +98,7 @@ const Register = ({ navigation }: Props) => {
 							<Text> Sign in</Text>
 						</TouchableOpacity>
 					</View>
+					{isEmpty && <Alert Message='Required fields are empty' />}
 				</View>
 			</View>
 		</View>
