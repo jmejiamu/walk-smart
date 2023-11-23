@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hook/useForm';
@@ -9,6 +9,7 @@ import TextInputForm from '../../.storybook/stories/Form/TextInputForm';
 import ButtonComponent from '../../.storybook/stories/Button/Button';
 import Alert from '../../.storybook/stories/Alert/Alert';
 import { styles } from './styles';
+import { EventCtx } from '../Context/EventContext';
 
 
 
@@ -16,6 +17,7 @@ interface Props extends StackScreenProps<RootStacksParams, 'Register'> { }
 
 const Register = ({ navigation }: Props) => {
 
+	const { newAuth } = useContext(EventCtx)
 	const [isEmpty, setEmpty] = useState(false);
 	const { data, fetcheer } = useFetch<Auth>({
 		error: true,
@@ -37,6 +39,7 @@ const Register = ({ navigation }: Props) => {
 	const registration = () => {
 		const isEmpty: boolean = checkEmptyField(form)
 		if (!isEmpty) {
+
 			fetcheer('http://localhost:8080/api-v1/register', {
 				method: 'POST',
 				headers: {
@@ -46,14 +49,12 @@ const Register = ({ navigation }: Props) => {
 			})
 			cleanFormState()
 		}
-
 		setEmpty(isEmpty)
-
 	};
 
 	useEffect(() => {
-		// setData() // this will be change when add state management
 		if (!data.error) {
+			newAuth(data)
 			navigation.navigate('Walkin', data)
 		}
 
