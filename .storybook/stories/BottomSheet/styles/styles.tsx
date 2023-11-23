@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
     marginBottom: spacing.size_small,
   },
   header: {

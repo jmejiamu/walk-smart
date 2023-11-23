@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStacksParams } from '../Main/Main';
@@ -10,10 +10,14 @@ import { Auth, userForm } from "../interface/models";
 import { useForm } from "../hook/useForm";
 import { useFetch } from "../hook/useFetch";
 import Alert from "../../.storybook/stories/Alert/Alert";
+import { EventCtx } from "../Context/EventContext";
 
 interface Props extends StackScreenProps<RootStacksParams, 'Signin'> { }
 
 const Signin = ({ navigation }: Props) => {
+
+	const { newAuth } = useContext(EventCtx)
+
 	const [isEmpty, setIsEmpty] = useState(false)
 	const { data, fetcheer } = useFetch<Auth>({
 		error: true,
@@ -34,6 +38,7 @@ const Signin = ({ navigation }: Props) => {
 	const userSignin = () => {
 		const isEmpty: boolean = checkEmptyField(form)
 		if (!isEmpty) {
+			
 			fetcheer('http://localhost:8080/api-v1/signin', {
 				method: 'POST',
 				headers: {
@@ -47,11 +52,10 @@ const Signin = ({ navigation }: Props) => {
 	}
 
 	useEffect(() => {
-		// setCtx(data) // here is api context
 		if (!data.error) {
+			newAuth(data)
 			navigation.navigate('Walkin', data)
 		}
-
 	}, [data])
 
 	return (

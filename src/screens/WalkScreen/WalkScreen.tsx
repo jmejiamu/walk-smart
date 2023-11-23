@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { AppState, View } from 'react-native';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { AppState, Text, View } from 'react-native';
 import { Marker } from 'react-native-maps';
 import Map from '../../../.storybook/stories/Map/Map';
 import { usePermission } from '../../hook/usePermission';
@@ -10,10 +10,14 @@ import { BottomSheetMethods } from '@devvie/bottom-sheet';
 import { useFetch } from '../../hook/useFetch';
 import { Event, Events } from '../../interface/models';
 import { useForm } from '../../hook/useForm';
+import { EventCtx } from '../../Context/EventContext';
+import Alert from '../../../.storybook/stories/Alert/Alert';
+import { colors } from '../../theme';
 
 const WalkScreen = () => {
 
-
+	const { auth } = useContext(EventCtx)
+	const [isEmpty, setEmpty] = useState(false)
 	const { checkMapPermissions } = usePermission()
 
 	const { data, fetcheer } = useFetch<Events>({
@@ -24,13 +28,12 @@ const WalkScreen = () => {
 
 	const { location } = useGeoLocation()
 
-	const { form, onChange } = useForm<Event>({
-		user_id: 'a058bb5a-fe79-46d4-9d1c-7ec5a8773c91', // this will replace when user login or register 
+	const { form, onChange, checkEmptyField } = useForm<Event>({
+		user_id: auth.record.user_id,
 		event_title: '',
 		event_description: '',
 		latitude: 0,
 		longitude: 0,
-		time_stamp: ''
 	})
 
 	const ref = useRef<BottomSheetMethods>(null)
@@ -42,18 +45,22 @@ const WalkScreen = () => {
 	const onHandleClose = () => {
 
 		const bodyRequest = { ...form, latitude: location.Latitude, longitude: location.Longitude }
-
-		fetcheer('http://localhost:8080/api-v1/events', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Cache-control': 'no-cache'
-			},
-			body: JSON.stringify(bodyRequest)
-		})
-		ref.current?.close()
+		console.log("=> ", bodyRequest);
+		
+		if (!checkEmptyField(bodyRequest)) {
+			fetcheer('http://localhost:8080/api-v1/events', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Cache-control': 'no-cache'
+				},
+				body: JSON.stringify(bodyRequest)
+			})
+			setEmpty(false)
+			ref.current?.close()
+		}
+		setEmpty(true)
 	}
-
 
 	useEffect(() => {
 		fetcheer('http://localhost:8080/api-v1/events/all')
@@ -66,7 +73,6 @@ const WalkScreen = () => {
 		})
 
 	}, [])
-
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -106,7 +112,20 @@ const WalkScreen = () => {
 				header="Add Event"
 				onHandleClose={onHandleClose}
 				sheetRef={ref}
-				footer="Everyone near you can be part of your event, have fun!"
+				footer={
+					<>
+						<View style={{ height: 110, top: 10 }}>
+							{isEmpty && <Alert
+								ContainerStyle={{ backgroundColor: colors.color_200 }}
+								TextStyle={{ color: colors.color_600 }}
+								Message='Requiered Field to create an event' />
+							}
+							<View style={{ flex: 1, justifyContent: 'flex-end' }}>
+								<Text>  Everyone near you can be part of your event, have fun! </Text>
+							</View>
+						</View>
+					</>
+				}
 				textInputProps={{
 					placeholder: 'Event name',
 					onChangeText: value => onChange(value, 'event_title')
