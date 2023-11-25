@@ -1,10 +1,15 @@
-import { Auth } from "../interface/models";
+import { Reducer } from "react";
+import { Auth, Event, Events } from "../interface/models";
 import { ACTION } from "./actions";
 
-type Action = { type: ACTION.USER_AUTH, payload: Auth }
+type Action =
+    | { type: ACTION.USER_AUTH, payload: Auth }
+    | { type: ACTION.ALL_EVENTS, payload: Events }
+    | { type: ACTION.CREATE_EVENT, payload: Event }
 
 interface State {
-    userAuth: Auth
+    userAuth: Auth;
+    events: Events;
 }
 
 export const initState: State = {
@@ -17,13 +22,35 @@ export const initState: State = {
             fail: false,
             token: ""
         }
+    },
+    events: {
+        error: false,
+        message: '',
+        events: []
     }
 }
 
-export const eventReducer = (state: State = initState, action: Action) => {
+export const eventReducer: Reducer<State, Action> = (state: State = initState, action: Action) => {
     switch (action.type) {
         case ACTION.USER_AUTH:
-            return { userAuth: action.payload }
+            return { ...state, userAuth: action.payload }
+
+        case ACTION.ALL_EVENTS:
+
+            return {
+                ...state,
+                events: action.payload
+            }
+
+        case ACTION.CREATE_EVENT:
+            return {
+                ...state,
+                events : {
+                    error: false,
+                    message:'New Event Created', // OR empty,
+                    events: [...state.events.events, action.payload]
+                }
+            }
         default:
             return state;
     }

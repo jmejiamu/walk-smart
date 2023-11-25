@@ -46,6 +46,7 @@ const Signin = ({ navigation }: Props) => {
 				},
 				body: JSON.stringify(form)
 			})
+			setIsEmpty(false)
 			cleanFormState()
 		}
 		setIsEmpty(isEmpty)

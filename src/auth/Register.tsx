@@ -47,6 +47,7 @@ const Register = ({ navigation }: Props) => {
 				},
 				body: JSON.stringify(form),
 			})
+			setEmpty(false)
 			cleanFormState()
 		}
 		setEmpty(isEmpty)
