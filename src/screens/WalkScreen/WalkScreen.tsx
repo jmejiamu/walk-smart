@@ -7,8 +7,7 @@ import { useGeoLocation } from '../../hook/useGeoLocation';
 import AddEventBtn from '../../../.storybook/stories/AddEventBtn/AddEventBtn';
 import BottomSheetComponent from '../../../.storybook/stories/BottomSheet/BottomSheetComponent';
 import { BottomSheetMethods } from '@devvie/bottom-sheet';
-import { useFetch } from '../../hook/useFetch';
-import { Event, Events } from '../../interface/models';
+import { Event } from '../../interface/models';
 import { useForm } from '../../hook/useForm';
 import { EventCtx } from '../../Context/EventContext';
 import Alert from '../../../.storybook/stories/Alert/Alert';
@@ -16,15 +15,9 @@ import { colors } from '../../theme';
 
 const WalkScreen = () => {
 
-	const { auth } = useContext(EventCtx)
+	const { auth, events, getAllEvents, createNewEvent } = useContext(EventCtx)
 	const [isEmpty, setEmpty] = useState(false)
 	const { checkMapPermissions } = usePermission()
-
-	const { data, fetcheer } = useFetch<Events>({
-		error: true,
-		message: '',
-		events: []
-	});
 
 	const { location } = useGeoLocation()
 
@@ -45,17 +38,9 @@ const WalkScreen = () => {
 	const onHandleClose = () => {
 
 		const bodyRequest = { ...form, latitude: location.Latitude, longitude: location.Longitude }
-		console.log("=> ", bodyRequest);
-		
+
 		if (!checkEmptyField(bodyRequest)) {
-			fetcheer('http://localhost:8080/api-v1/events', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Cache-control': 'no-cache'
-				},
-				body: JSON.stringify(bodyRequest)
-			})
+			createNewEvent(bodyRequest)
 			setEmpty(false)
 			ref.current?.close()
 		}
@@ -63,7 +48,7 @@ const WalkScreen = () => {
 	}
 
 	useEffect(() => {
-		fetcheer('http://localhost:8080/api-v1/events/all')
+		getAllEvents()
 	}, [])
 
 	useEffect(() => {
@@ -73,7 +58,8 @@ const WalkScreen = () => {
 		})
 
 	}, [])
-
+	// console.log(location);
+	
 	return (
 		<View style={{ flex: 1 }}>
 			<Map
@@ -81,8 +67,8 @@ const WalkScreen = () => {
 				longitude={location.Longitude}
 			>
 				{
-					data.events &&
-					data.events.map((event, i) => {
+					events.events &&
+					events.events.map((event, i) => {
 						return (
 							<Marker
 								key={i}
