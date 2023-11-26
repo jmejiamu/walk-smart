@@ -1,20 +1,14 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { FlatList, Platform, View } from "react-native"
 import Card from "../Card/Card";
-import { MyEvents } from "../../../interface/models";
-import { useFetch } from "../../../hook/useFetch";
+import { EventCtx } from "../../../Context/EventContext";
 
 const JoinedScreen = () => {
     // this is a test endpoit will change when add joined events endpoint
-    const { data, fetcheer } = useFetch<MyEvents>({
-        error: true,
-        recived: '',
-        user_id: '',
-        myEvents: []
-    })
+    const { auth, myEvents, getMyEvents } = useContext(EventCtx)
 
     useEffect(() => {
-        fetcheer(`http://localhost:8080/api-v1/events/all/me?user_id=b67b8a34-85e6-41bf-a725-d9edd829bc7c`)
+        getMyEvents(auth.record.user_id) // testing 
     }, [])
 
 
@@ -24,7 +18,7 @@ const JoinedScreen = () => {
             <FlatList
                 showsVerticalScrollIndicator={false}
                 style={{ marginBottom: Platform.OS === 'android' ? 40 : 50 }}
-                data={data.myEvents}
+                data={myEvents.myEvents}
                 renderItem={({ item }) => <Card data={item} />}
                 keyExtractor={(item) => item.event_id ?? 'unknow'}
             />
