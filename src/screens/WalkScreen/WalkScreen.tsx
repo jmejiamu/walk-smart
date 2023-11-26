@@ -48,17 +48,24 @@ const WalkScreen = () => {
 	}
 
 	useEffect(() => {
-		getAllEvents()
-	}, [])
-
-	useEffect(() => {
 		AppState.addEventListener('change', state => {
 			if (state !== 'active') return
 			checkMapPermissions();
 		})
 
 	}, [])
-	
+
+	useEffect(() => {
+		getAllEvents()
+	}, [])
+
+	useEffect(() => {
+		let id = setInterval(() => {
+			getAllEvents()
+		}, 5000);
+		return () => clearInterval(id);
+	}, [])
+
 	return (
 		<View style={{ flex: 1 }}>
 			<Map
