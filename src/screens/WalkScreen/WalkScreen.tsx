@@ -58,7 +58,6 @@ const WalkScreen = () => {
 		})
 
 	}, [])
-	// console.log(location);
 	
 	return (
 		<View style={{ flex: 1 }}>
