@@ -17,7 +17,7 @@ export const useForm = <T extends Object>(initState: T) => {
   const checkEmptyField = (form: T): boolean => {
     let isEmpty: boolean = false;
     for (const key in form) {
-      if (state[key] === '') {
+      if (form[key] === '') {
         isEmpty = true
       }
     }
