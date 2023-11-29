@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hook/useForm';
-import { useFetch } from '../hook/useFetch';
-import { Auth, userForm } from '../interface/models';
+import { userForm } from '../interface/models';
 import { RootStacksParams } from '../Main/Main';
 import TextInputForm from '../../.storybook/stories/Form/TextInputForm';
 import ButtonComponent from '../../.storybook/stories/Button/Button';
@@ -11,24 +10,12 @@ import Alert from '../../.storybook/stories/Alert/Alert';
 import { styles } from './styles';
 import { EventCtx } from '../Context/EventContext';
 
-
-
 interface Props extends StackScreenProps<RootStacksParams, 'Register'> { }
 
 const Register = ({ navigation }: Props) => {
 
-	const { newAuth } = useContext(EventCtx)
+	const { newAuth, auth } = useContext(EventCtx)
 	const [isEmpty, setEmpty] = useState(false);
-	const { data, fetcheer } = useFetch<Auth>({
-		error: true,
-		record: {
-			created: '',
-			fail: true,
-			token: '',
-			user_id: '',
-			username: ''
-		}
-	})
 
 	const { onChange, checkEmptyField, cleanFormState, form } = useForm<userForm>({
 		fullName: '',
@@ -39,27 +26,15 @@ const Register = ({ navigation }: Props) => {
 	const registration = () => {
 		const isEmpty: boolean = checkEmptyField(form)
 		if (!isEmpty) {
-
-			fetcheer('http://localhost:8080/api-v1/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(form),
-			})
-			setEmpty(false)
-			cleanFormState()
+			newAuth("register", form)
+			if (!auth.error) {
+				setEmpty(false)
+				cleanFormState()
+				navigation.navigate('Walkin', auth)
+			}
 		}
 		setEmpty(isEmpty)
 	};
-
-	useEffect(() => {
-		if (!data.error) {
-			newAuth(data)
-			navigation.navigate('Walkin', data)
-		}
-
-	}, [data])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -73,7 +48,6 @@ const Register = ({ navigation }: Props) => {
 						onChangeText: val => onChange(val, 'fullName')
 					}}
 				/>
-
 				<TextInputForm
 					title="Email"
 					textInputStyle={styles.input}
@@ -96,7 +70,16 @@ const Register = ({ navigation }: Props) => {
 					<ButtonComponent text="Register" onPress={registration} />
 					<View style={{ ...styles.bottomInnerContainer, marginVertical: 10 }}>
 						<Text style={styles.doYouHaveAccount}>Do you have an account?</Text>
-						<TouchableOpacity onPress={() => navigation.navigate('Signin', data)} style={{ alignSelf: 'flex-end' }}>
+						<TouchableOpacity onPress={() => navigation.navigate('Signin', {
+							error: true,
+							record: {
+								user_id: '',
+								username: '',
+								created: '',
+								fail: false,
+								token: ''
+							}
+						})} style={{ alignSelf: 'flex-end' }}>
 							<Text> Sign in</Text>
 						</TouchableOpacity>
 					</View>

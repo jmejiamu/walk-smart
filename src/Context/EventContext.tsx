@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { Auth, Event, Events, MyEvents } from "../interface/models";
+import { Auth, Event, Events, MyEvents, userForm } from "../interface/models";
 import { eventReducer, initState } from "./EventReducer";
 import { ACTION } from "./actions";
 import { useFetcheer } from "../hook/useFetch";
@@ -10,7 +10,7 @@ export interface EventContextProps {
     events: Events;
     myEvents: MyEvents;
 
-    newAuth: (auth: Auth) => void;
+    newAuth: (authAction: string, auth: userForm) => void;
     createNewEvent: (event: Event) => void;
     getMyEvents: (uuid: string) => void;
     getAllEvents: () => void;
@@ -26,10 +26,17 @@ export const EventProvider = ({ children }: any) => {
     const { fetcheer } = useFetcheer()
 
 
-    const newAuth = (auth: Auth) => {
-        dispatch({ type: ACTION.USER_AUTH, payload: auth })
+    const newAuth = (authAction: string, auth: userForm) => {
+        // authAction => endpoint register | signin
+        fetcheer(`${api}${authAction}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(auth),
+        })
+            .then(data => dispatch({ type: ACTION.USER_AUTH, payload: data }))
     }
-
 
     const getMyEvents = (uuid: string) => {
         fetcheer(`${api}events/all/me?user_id=${uuid}`)
@@ -52,8 +59,6 @@ export const EventProvider = ({ children }: any) => {
             body: JSON.stringify(event)
         })
     }
-
-
 
     return (
         <EventCtx.Provider value={{

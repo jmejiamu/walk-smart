@@ -21,12 +21,9 @@ const WalkScreen = () => {
 
 	const { location } = useGeoLocation()
 
-	const { form, onChange, checkEmptyField } = useForm<Event>({
-		user_id: auth.record.user_id,
+	const { form, onChange, checkEmptyField, cleanFormState } = useForm<Event>({
 		event_title: '',
 		event_description: '',
-		latitude: 0,
-		longitude: 0,
 	})
 
 	const ref = useRef<BottomSheetMethods>(null)
@@ -36,15 +33,17 @@ const WalkScreen = () => {
 	}
 
 	const onHandleClose = () => {
+		const bodyRequest = { ...form, user_id: auth.record.user_id, latitude: location.Latitude, longitude: location.Longitude }
 
-		const bodyRequest = { ...form, latitude: location.Latitude, longitude: location.Longitude }
-
-		if (!checkEmptyField(bodyRequest)) {
-			createNewEvent(bodyRequest)
+		const fields = checkEmptyField(bodyRequest)
+		if (!fields) {
 			setEmpty(false)
+			createNewEvent(bodyRequest)
+			cleanFormState()
 			ref.current?.close()
+		}else {
+			setEmpty(true)
 		}
-		setEmpty(true)
 	}
 
 	useEffect(() => {
@@ -65,6 +64,7 @@ const WalkScreen = () => {
 		}, 5000);
 		return () => clearInterval(id);
 	}, [])
+
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -120,10 +120,12 @@ const WalkScreen = () => {
 				}
 				textInputProps={{
 					placeholder: 'Event name',
+					value: form.event_title,
 					onChangeText: value => onChange(value, 'event_title')
 				}}
 				textDescriptionInputProps={{
 					placeholder: 'Short Description',
+					value: form.event_description,
 					onChangeText: value => onChange(value, 'event_description')
 				}}
 			/>

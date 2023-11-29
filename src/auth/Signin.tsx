@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Text, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStacksParams } from '../Main/Main';
@@ -6,9 +6,8 @@ import { styles } from "./styles";
 import TextInputForm from "../../.storybook/stories/Form/TextInputForm";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ButtonComponent from "../../.storybook/stories/Button/Button";
-import { Auth, userForm } from "../interface/models";
+import { userForm } from "../interface/models";
 import { useForm } from "../hook/useForm";
-import { useFetch } from "../hook/useFetch";
 import Alert from "../../.storybook/stories/Alert/Alert";
 import { EventCtx } from "../Context/EventContext";
 
@@ -16,19 +15,8 @@ interface Props extends StackScreenProps<RootStacksParams, 'Signin'> { }
 
 const Signin = ({ navigation }: Props) => {
 
-	const { newAuth } = useContext(EventCtx)
-
+	const { newAuth, auth } = useContext(EventCtx)
 	const [isEmpty, setIsEmpty] = useState(false)
-	const { data, fetcheer } = useFetch<Auth>({
-		error: true,
-		record: {
-			created: '',
-			fail: true,
-			token: '',
-			user_id: '',
-			username: ''
-		}
-	})
 
 	const { form, onChange, checkEmptyField, cleanFormState } = useForm<userForm>({
 		email: '',
@@ -38,26 +26,15 @@ const Signin = ({ navigation }: Props) => {
 	const userSignin = () => {
 		const isEmpty: boolean = checkEmptyField(form)
 		if (!isEmpty) {
-			
-			fetcheer('http://localhost:8080/api-v1/signin', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(form)
-			})
-			setIsEmpty(false)
-			cleanFormState()
+			newAuth("signin", form)
+			if (!auth.error) {
+				setIsEmpty(false)
+				cleanFormState()
+				navigation.navigate('Walkin', auth)
+			}
 		}
 		setIsEmpty(isEmpty)
 	}
-
-	useEffect(() => {
-		if (!data.error) {
-			newAuth(data)
-			navigation.navigate('Walkin', data)
-		}
-	}, [data])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -85,7 +62,16 @@ const Signin = ({ navigation }: Props) => {
 					<ButtonComponent text="Signin" onPress={userSignin} />
 					<View style={{ ...styles.bottomInnerContainer, marginVertical: 10 }}>
 						<Text style={styles.doYouHaveAccount}>I do not you have an account!</Text>
-						<TouchableOpacity onPress={() => navigation.navigate('Register', data)} style={{ alignSelf: 'flex-end' }}>
+						<TouchableOpacity onPress={() => navigation.navigate('Register', {
+							error: true,
+							record: {
+								user_id: "",
+								username: "",
+								created: "",
+								fail: false,
+								token: ""
+							}
+						})} style={{ alignSelf: 'flex-end' }}>
 							<Text> Register </Text>
 						</TouchableOpacity>
 					</View>
