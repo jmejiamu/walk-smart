@@ -1,17 +1,20 @@
 import { Reducer } from "react";
-import { Auth, Event, Events, MyEvents } from "../interface/models";
+import { Auth, Event, EventInfo, Events, MyEvents } from "../interface/models";
 import { ACTION } from "./actions";
 
 type Action =
     | { type: ACTION.ALL_EVENTS, payload: Events }
     | { type: ACTION.ALL_MY_EVENTS, payload: MyEvents }
+    | { type: ACTION.EVENT_INFO, payload: EventInfo }
     | { type: ACTION.CREATE_EVENT, payload: Event }
     | { type: ACTION.USER_AUTH, payload: Auth }
+
 
 interface State {
     userAuth: Auth;
     events: Events;
     myEvents: MyEvents;
+    eventInfo : EventInfo;
 }
 
 export const initState: State = {
@@ -35,6 +38,12 @@ export const initState: State = {
         recived: "",
         user_id: "",
         myEvents: []
+    },
+    eventInfo : {
+        error: true,
+        recived: "no data",
+        event_id: "",
+        event: []
     }
 }
 
@@ -52,6 +61,11 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
             return {
                 ...state,
                 myEvents: action.payload
+            }
+        case ACTION.EVENT_INFO: 
+            return {
+                ...state,
+                eventInfo : action.payload,
             }
         case ACTION.CREATE_EVENT:
             return {
