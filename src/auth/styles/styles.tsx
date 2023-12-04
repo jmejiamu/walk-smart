@@ -1,7 +1,7 @@
-import {StyleSheet, Dimensions} from 'react-native';
-import {colors} from '../../theme';
+import { StyleSheet, Dimensions } from 'react-native';
+import { colors } from '../../theme';
 
-const {height} = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   container: {
@@ -9,8 +9,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.color_200,
   },
   bottomContainer: {
+    top: 10,
     marginHorizontal: 10,
-    marginTop: 5,
+    // marginTop: 10,
   },
   bottomInnerContainer: {
     flexDirection: 'row',
@@ -22,12 +23,19 @@ const styles = StyleSheet.create({
   input: {
     color: colors.color_600,
     paddingLeft: 10,
+ },
+  logContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logo: {
-    marginTop: height * 0.2,
-    marginBottom: 60,
-    textAlign: 'center',
-    fontSize: 40,
+    backgroundColor: colors.color_100,
+    borderRadius: 50,
+    marginTop: height * 0.1,
+    height: 100,
+    width: 100,
+
+    marginBottom: 30,
   },
 });
 
