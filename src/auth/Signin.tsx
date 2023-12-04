@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Text, View } from "react-native"
+import { Image, KeyboardAvoidingView, Platform, Text, View } from "react-native"
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStacksParams } from '../Main/Main';
 import { styles } from "./styles";
@@ -37,9 +37,19 @@ const Signin = ({ navigation }: Props) => {
 	}
 
 	return (
-		<View style={{ flex: 1 }}>
-			<View style={styles.container}>
-				<Text style={styles.logo}> LOGO </Text>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={styles.container}>
+			<View style={{
+				padding: 2,
+				justifyContent: 'space-around',
+			}}>
+				<View style={styles.logContainer}>
+					<Image
+						style={styles.logo}
+						source={require('../assets/log.png')}
+					/>
+				</View>
 				<TextInputForm
 					title="Email"
 					textInputStyle={styles.input}
@@ -78,7 +88,7 @@ const Signin = ({ navigation }: Props) => {
 					{isEmpty && <Alert Message='Required fields are empty' />}
 				</View>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	)
 }
 
