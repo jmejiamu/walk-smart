@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   bottomContainer: {
     top: 10,
     marginHorizontal: 10,
-    // marginTop: 10,
   },
   bottomInnerContainer: {
     flexDirection: 'row',
