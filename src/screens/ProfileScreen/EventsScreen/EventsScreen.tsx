@@ -12,8 +12,6 @@ const EventScreens = () => {
         getMyEvents(auth.record.user_id)
     }, [])
 
-
-
     return (
         <View style={{ flex: 1 }}>
             <FlatList

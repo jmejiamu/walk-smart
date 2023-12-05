@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { Auth, Event, EventInfo, Events, MyEvents, userForm } from "../interface/models";
+import { Auth, Event, EventInfo, Events, JoinedEvents, MyEvents, userForm } from "../interface/models";
 import { eventReducer, initState } from "./EventReducer";
 import { ACTION } from "./actions";
 import { useFetcheer } from "../hook/useFetch";
@@ -10,12 +10,17 @@ export interface EventContextProps {
     events: Events;
     myEvents: MyEvents;
     eventInfo: EventInfo;
+    joinedEvents: JoinedEvents;
 
     newAuth: (authAction: string, auth: userForm) => void;
     createNewEvent: (event: Event) => void;
+    joinEvent: (userId: string, eventID: string, event: Event) => void;
+
     getEventByID: (eventID: string) => void;
     getMyEvents: (uuid: string) => void;
     getAllEvents: () => void;
+    getJoinedEvents: (userID: string) => void;
+    
 }
 
 export const EventCtx = createContext<EventContextProps>({} as EventContextProps)
@@ -66,17 +71,37 @@ export const EventProvider = ({ children }: any) => {
         })
     }
 
+    const joinEvent = (userID: string, eventID: string, event: Event) => {
+        dispatch({type: ACTION.JOIN_EVENT, payload: event})
+        // http://localhost:8080/api-v1/join?user_id=aa173cdc-d307-48bb-b7b3-cc79c6f4726f&event_id=044e5c72-0e60-45ef-b4d3-beaa2f660241
+        // user with id join event with id 
+        fetcheer(`${api}join?user_id=${userID}&event_id=${eventID}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+    }
+
+    const getJoinedEvents = (userID : string) => {
+        // http://localhost:8080/api-v1/join?user_id=aa173cdc-d307-48bb-b7b3-cc79c6f4726f
+       fetcheer(`${api}join?user_id=${userID}`)
+        .then(data => dispatch({type: ACTION.ALL_JOINED_EVENTS, payload: data})) 
+    }
     return (
         <EventCtx.Provider value={{
             auth: event.userAuth,
             events: event.events,
             myEvents: event.myEvents,
             eventInfo: event.eventInfo,
+            joinedEvents: event.joinEvents,
             newAuth,
             getEventByID,
             getMyEvents,
             getAllEvents,
-            createNewEvent
+            getJoinedEvents,
+            createNewEvent,
+            joinEvent
         }}>
             {children}
         </EventCtx.Provider>

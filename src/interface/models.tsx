@@ -32,10 +32,16 @@ export interface EventInfo {
 
 // for all events created by user display on profile
 export interface MyEvents {
-    error: boolean,
+    error: boolean;
     recived: string;
     user_id: string;
     myEvents: Event[];
+}
+
+export interface JoinedEvents  {
+    error?: boolean;
+    recived: string
+    events: Event[];
 }
 
 export interface Event {

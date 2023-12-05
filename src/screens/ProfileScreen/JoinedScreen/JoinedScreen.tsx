@@ -4,21 +4,18 @@ import Card from "../Card/Card";
 import { EventCtx } from "../../../Context/EventContext";
 
 const JoinedScreen = () => {
-    // this is a test endpoit will change when add joined events endpoint
-    const { auth, myEvents, getMyEvents } = useContext(EventCtx)
+    const { auth, joinedEvents,  getJoinedEvents } = useContext(EventCtx)
 
     useEffect(() => {
-        getMyEvents(auth.record.user_id) // testing 
+        getJoinedEvents(auth.record.user_id) 
     }, [])
-
-
 
     return (
         <View style={{ flex: 1 }}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 style={{ marginBottom: Platform.OS === 'android' ? 40 : 50 }}
-                data={myEvents.myEvents}
+                data={joinedEvents.events}
                 renderItem={({ item }) => <Card data={item} />}
                 keyExtractor={(item) => item.event_id ?? 'unknow'}
             />
