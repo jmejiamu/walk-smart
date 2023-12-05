@@ -13,24 +13,30 @@ const { height } = Dimensions.get('screen')
 
 const EventScreen = () => {
     const { params } = useRoute<RouteProp<RootStacksParams, 'Event'>>()
-    const { eventInfo, getEventByID } = useContext(EventCtx)
+    const {auth, eventInfo, getEventByID, joinEvent } = useContext(EventCtx)
 
     useEffect(() => {
+        if (!params.event_id) return
         getEventByID(params.event_id);
-    }, [])
+    }, [params])
+
+//    console.log(eventInfo.event[0]);
+    
 
     return (
         <View>
             <EventHeader
-                eventName={eventInfo.event[0].event_title}
+                eventName={eventInfo.event[0]?.event_title}
             />
             <ScrollView showsVerticalScrollIndicator={false} style={{ ...styles.scrollStyle, height: height * 0.30 }}>
-                <Text> {eventInfo.event[0].event_description} </Text>
+                <Text> {eventInfo.event[0]?.event_description} </Text>
             </ScrollView>
             <View style={styles.bottomContainer}>
                 <ButtonComponent
                     text={<Text style={styles.buttonText}>Join</Text>}
-                    onPress={() => console.log("this")}
+                    onPress={() => joinEvent(auth.record.user_id, params.event_id, eventInfo.event[0])}
+                        
+                
                 />
                 <View style={styles.joinContainer}>
                     <Icon

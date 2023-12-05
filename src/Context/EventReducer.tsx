@@ -1,20 +1,23 @@
 import { Reducer } from "react";
-import { Auth, Event, EventInfo, Events, MyEvents } from "../interface/models";
+import { Auth, Event, EventInfo, Events, JoinedEvents, MyEvents } from "../interface/models";
 import { ACTION } from "./actions";
 
 type Action =
     | { type: ACTION.ALL_EVENTS, payload: Events }
     | { type: ACTION.ALL_MY_EVENTS, payload: MyEvents }
+    | { type: ACTION.ALL_JOINED_EVENTS, payload: JoinedEvents }
     | { type: ACTION.EVENT_INFO, payload: EventInfo }
     | { type: ACTION.CREATE_EVENT, payload: Event }
     | { type: ACTION.USER_AUTH, payload: Auth }
+    | { type: ACTION.JOIN_EVENT, payload: Event }
 
 
 interface State {
     userAuth: Auth;
     events: Events;
     myEvents: MyEvents;
-    eventInfo : EventInfo;
+    eventInfo: EventInfo;
+    joinEvents: JoinedEvents;
 }
 
 export const initState: State = {
@@ -39,11 +42,16 @@ export const initState: State = {
         user_id: "",
         myEvents: []
     },
-    eventInfo : {
+    eventInfo: {
         error: true,
-        recived: "no data",
+        recived: "",
         event_id: "",
         event: []
+    },
+    joinEvents: {
+        error: true,
+        recived: "",
+        events: []
     }
 }
 
@@ -62,10 +70,10 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
                 ...state,
                 myEvents: action.payload
             }
-        case ACTION.EVENT_INFO: 
+        case ACTION.EVENT_INFO:
             return {
                 ...state,
-                eventInfo : action.payload,
+                eventInfo: action.payload,
             }
         case ACTION.CREATE_EVENT:
             return {
@@ -75,6 +83,20 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
                     message: 'New Event Created', // OR empty,
                     events: [...state.events.events, action.payload]
                 }
+            }
+        case ACTION.JOIN_EVENT:
+            return {
+                ...state,
+                joinEvents: {
+                    recived: "",
+                    error: true,
+                    events: [...state.joinEvents.events, action.payload]
+                }
+            }
+        case ACTION.ALL_JOINED_EVENTS:
+            return {
+                ...state,
+                joinEvents: action.payload
             }
         default:
             return state;

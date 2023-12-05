@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hook/useForm';
 import { userForm } from '../interface/models';
@@ -37,9 +37,19 @@ const Register = ({ navigation }: Props) => {
 	};
 
 	return (
-		<View style={{ flex: 1 }}>
-			<View style={styles.container}>
-				<Text style={styles.logo}> LOGO </Text>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={styles.container}>
+			<View style={{
+				padding: 2,
+				justifyContent: 'space-around',
+			}}>
+				<View style={styles.logContainer}>
+					<Image
+						style={styles.logo}
+						source={require('../assets/log.png')}
+					/>
+				</View>
 				<TextInputForm
 					title="Full Name"
 					textInputStyle={styles.input}
@@ -86,7 +96,7 @@ const Register = ({ navigation }: Props) => {
 					{isEmpty && <Alert Message='Required fields are empty' />}
 				</View>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
 

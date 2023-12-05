@@ -8,6 +8,7 @@ import { EventCtx } from '../../Context/EventContext';
 
 const ProfileScreen = () => {
 	const { auth } = useContext(EventCtx)
+	
 	return (
 		<SafeAreaView>
 			<View style={styles.userContainer}>
