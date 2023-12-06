@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dimensions, ScrollView, Text, View } from "react-native"
 import { RouteProp, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -8,20 +8,30 @@ import { RootStacksParams } from "../../Main/Main";
 import EventHeader from "../../../.storybook/stories/EventHeader/EventHeader";
 import ButtonComponent from "../../../.storybook/stories/Button/Button";
 import { EventCtx } from "../../Context/EventContext";
+// import { Event, EventInfo } from "../../interface/models";
+import Alert from "../../../.storybook/stories/Alert/Alert";
+import { Joined } from "../../interface/models";
 
 const { height } = Dimensions.get('screen')
 
 const EventScreen = () => {
     const { params } = useRoute<RouteProp<RootStacksParams, 'Event'>>()
-    const {auth, eventInfo, getEventByID, joinEvent } = useContext(EventCtx)
+    const { auth, eventInfo, joined, joinedEvent, getEventByID, joinEvent } = useContext(EventCtx)
+
+    useEffect(() => {
+        if (joined.joined) {
+            setTimeout(() => {
+                // change state joined message on alert display for 1.5 seconds
+                joinedEvent()
+            }, 1500);
+        }
+    }, [joined])
 
     useEffect(() => {
         if (!params.event_id) return
         getEventByID(params.event_id);
     }, [params])
 
-//    console.log(eventInfo.event[0]);
-    
 
     return (
         <View>
@@ -35,8 +45,7 @@ const EventScreen = () => {
                 <ButtonComponent
                     text={<Text style={styles.buttonText}>Join</Text>}
                     onPress={() => joinEvent(auth.record.user_id, params.event_id, eventInfo.event[0])}
-                        
-                
+
                 />
                 <View style={styles.joinContainer}>
                     <Icon
@@ -46,6 +55,7 @@ const EventScreen = () => {
                     />
                     <Text style={styles.joinText}> 53 </Text>
                 </View>
+                {joined.joined && <Alert ContainerStyle={{ borderWidth: 1.10, borderColor: 'red' }} Message={joined.message} />}
             </View>
         </View>
 

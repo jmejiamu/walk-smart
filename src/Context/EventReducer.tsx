@@ -1,5 +1,5 @@
 import { Reducer } from "react";
-import { Auth, Event, EventInfo, Events, JoinedEvents, MyEvents } from "../interface/models";
+import { Auth, Event, EventInfo, Events, Joined, JoinedEvents, MyEvents } from "../interface/models";
 import { ACTION } from "./actions";
 
 type Action =
@@ -10,6 +10,7 @@ type Action =
     | { type: ACTION.CREATE_EVENT, payload: Event }
     | { type: ACTION.USER_AUTH, payload: Auth }
     | { type: ACTION.JOIN_EVENT, payload: Event }
+    | { type: ACTION.JOINED, payload: Joined }
 
 
 interface State {
@@ -18,6 +19,7 @@ interface State {
     myEvents: MyEvents;
     eventInfo: EventInfo;
     joinEvents: JoinedEvents;
+    joined: Joined;
 }
 
 export const initState: State = {
@@ -52,6 +54,10 @@ export const initState: State = {
         error: true,
         recived: "",
         events: []
+    },
+    joined: {
+        joined: false, 
+        message:""
     }
 }
 
@@ -97,6 +103,11 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
             return {
                 ...state,
                 joinEvents: action.payload
+            }
+        case ACTION.JOINED:
+            return{
+                ...state,
+                joined : action.payload
             }
         default:
             return state;

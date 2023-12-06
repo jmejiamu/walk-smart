@@ -38,6 +38,10 @@ export interface MyEvents {
     myEvents: Event[];
 }
 
+export interface Joined {
+    joined?: boolean;
+    message?:string;
+}
 export interface JoinedEvents  {
     error?: boolean;
     recived: string

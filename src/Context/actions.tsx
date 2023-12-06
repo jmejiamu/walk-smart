@@ -6,4 +6,5 @@ export enum ACTION {
     EVENT_INFO = 'EVENT_INFO',
     USER_AUTH = 'USER_AUTH',
     JOIN_EVENT = 'JOIN_EVENT',
+    JOINED = 'JOINED',
 }
