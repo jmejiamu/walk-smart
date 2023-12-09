@@ -62,7 +62,8 @@ export const EventProvider = ({ children }: any) => {
     }
 
     const createNewEvent = (event: Event) => {
-        dispatch({ type: ACTION.CREATE_EVENT, payload: event })
+        dispatch({ type: ACTION.ADD_TO_MY_EVENTS, payload: event }) // will add new event to my events list
+        dispatch({ type: ACTION.CREATE_EVENT, payload: event }) // will add mew event to a list of all events
         fetcheer(`${api}events`, {
             method: 'POST',
             headers: {
@@ -82,16 +83,16 @@ export const EventProvider = ({ children }: any) => {
                 'Content-Type': 'application/json',
             },
         }).then(data => {
-            if(data.joined) {
-                dispatch({type: ACTION.JOINED, payload : data})
-            }else {
+            if (data.joined) {
+                dispatch({ type: ACTION.JOINED, payload: data })
+            } else {
                 dispatch({ type: ACTION.JOIN_EVENT, payload: event })
             }
         })
     }
 
     const joinedEvent = () => {
-        dispatch({type: ACTION.JOINED, payload : {joined: false, message: ''}})
+        dispatch({ type: ACTION.JOINED, payload: { joined: false, message: '' } })
     }
 
     const getJoinedEvents = (userID: string) => {

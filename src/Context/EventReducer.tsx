@@ -8,6 +8,7 @@ type Action =
     | { type: ACTION.ALL_JOINED_EVENTS, payload: JoinedEvents }
     | { type: ACTION.EVENT_INFO, payload: EventInfo }
     | { type: ACTION.CREATE_EVENT, payload: Event }
+    | { type: ACTION.ADD_TO_MY_EVENTS, payload: Event }
     | { type: ACTION.USER_AUTH, payload: Auth }
     | { type: ACTION.JOIN_EVENT, payload: Event }
     | { type: ACTION.JOINED, payload: Joined }
@@ -41,7 +42,6 @@ export const initState: State = {
     myEvents: {
         error: false,
         recived: "",
-        user_id: "",
         myEvents: []
     },
     eventInfo: {
@@ -56,8 +56,8 @@ export const initState: State = {
         events: []
     },
     joined: {
-        joined: false, 
-        message:""
+        joined: false,
+        message: ""
     }
 }
 
@@ -90,6 +90,15 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
                     events: [...state.events.events, action.payload]
                 }
             }
+        case ACTION.ADD_TO_MY_EVENTS:
+            return {
+                ...state,
+                myEvents: {
+                    error: false,
+                    recived: '',
+                    myEvents: [...state.myEvents.myEvents, action.payload]
+                }
+            }
         case ACTION.JOIN_EVENT:
             return {
                 ...state,
@@ -105,9 +114,9 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
                 joinEvents: action.payload
             }
         case ACTION.JOINED:
-            return{
+            return {
                 ...state,
-                joined : action.payload
+                joined: action.payload
             }
         default:
             return state;

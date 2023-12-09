@@ -6,9 +6,9 @@ import { EventCtx } from "../../../Context/EventContext";
 
 const EventScreens = () => {
 
-    const { auth, myEvents, getMyEvents } = useContext(EventCtx)
+    const { auth,  myEvents, getMyEvents } = useContext(EventCtx)
 
-     useEffect(() => {
+    useEffect(() => {
         getMyEvents(auth.record.user_id)
     }, [])
 

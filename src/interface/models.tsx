@@ -34,7 +34,6 @@ export interface EventInfo {
 export interface MyEvents {
     error: boolean;
     recived: string;
-    user_id: string;
     myEvents: Event[];
 }
 
