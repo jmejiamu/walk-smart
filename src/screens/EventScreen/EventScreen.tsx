@@ -1,20 +1,23 @@
-import { useContext, useEffect, useState } from "react";
-import { Dimensions, Platform, ScrollView, Text, View } from "react-native"
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { useContext, useEffect } from "react";
+import { Dimensions, Platform, ScrollView, StyleSheet, Text, View } from "react-native"
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { colors } from "../../theme";
 import { styles } from "./styles";
-import { RootStacksParams } from "../../Main/Main";
+import { Navigation, RootStacksParams } from "../../Main/Main";
 import EventHeader from "../../../.storybook/stories/EventHeader/EventHeader";
 import ButtonComponent from "../../../.storybook/stories/Button/Button";
 import { EventCtx } from "../../Context/EventContext";
 import Alert from "../../../.storybook/stories/Alert/Alert";
+import Btn from "../../../.storybook/stories/Btn/Btn";
 
 const { height } = Dimensions.get('screen')
 
 const EventScreen = () => {
     const { params } = useRoute<RouteProp<RootStacksParams, 'Event'>>()
     const { auth, eventInfo, joined, joinedEvent, getEventByID, joinEvent } = useContext(EventCtx)
+
+    const navigation = useNavigation<Navigation>()
 
     useEffect(() => {
         if (joined.joined) {
@@ -32,16 +35,29 @@ const EventScreen = () => {
 
     return (
         <View>
+            <Btn
+                btnState="enable"
+                action={() => navigation.navigate('Events', auth)}
+                opacity={0.8}
+                btnStyle={{
+                    ...styles.navigationBackButton,
+                    position: 'absolute',
+                    zIndex: 99
+                }}
+                children={
+                    <Icon
+                        name="arrow-left"
+                        color="#fff"
+                        size={30}
+                    />
+                }
+            />
             {joined.joined &&
                 <Alert ContainerStyle={{
+                    ...styles.alert,
                     position: 'absolute',
-                    zIndex: 999,
                     top: Platform.OS === 'ios' ? 220 : 190,
-                    right: 5,
-                    borderWidth: 2.50,
-                    height: 80,
-                    justifyContent:'center',
-                    borderColor: 'red'
+                    zIndex: 999,
                 }}
                     Message={joined.message}
                 />
