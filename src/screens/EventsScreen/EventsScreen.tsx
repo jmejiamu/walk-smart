@@ -12,7 +12,7 @@ interface SearchProps extends Event {
 	searchEvent: string;
 }
 
-const CardEventRender = ({ event_title, time_stamp = '', event_id }: Event) => {
+const CardEventRender = ({ event_title, time_stamp = '', event_id = '' }: Event) => {
 	const { formater } = useDateFormat()
 
 	const nav = useNavigation<Navigation>()
@@ -21,7 +21,7 @@ const CardEventRender = ({ event_title, time_stamp = '', event_id }: Event) => {
 		<View>
 			<TouchableOpacity activeOpacity={0.7} onPress={() => nav.navigate('Event', { event_id })}>
 				<View style={{ marginTop: 10 }} />
-				<ListCard key={event_id} EventName={event_title} Date={formater(time_stamp, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit' })} />
+				<ListCard  key={event_id} EventName={event_title} Date={formater(time_stamp, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit' })} />
 			</TouchableOpacity>
 		</View>
 	)
