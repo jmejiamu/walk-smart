@@ -7,6 +7,7 @@ type Action =
     | { type: ACTION.ALL_MY_EVENTS, payload: MyEvents }
     | { type: ACTION.ALL_JOINED_EVENTS, payload: JoinedEvents }
     | { type: ACTION.EVENT_INFO, payload: EventInfo }
+    | { type: ACTION.UPDATE_JOINED_COUNTER, payload: Event }
     | { type: ACTION.CREATE_EVENT, payload: Event }
     | { type: ACTION.ADD_TO_MY_EVENTS, payload: Event }
     | { type: ACTION.USER_AUTH, payload: Auth }
@@ -46,6 +47,7 @@ export const initState: State = {
     },
     eventInfo: {
         error: true,
+        joined_users: 0,
         recived: "",
         event_id: "",
         event: []
@@ -80,6 +82,17 @@ export const eventReducer: Reducer<State, Action> = (state: State = initState, a
             return {
                 ...state,
                 eventInfo: action.payload,
+            }
+        case ACTION.UPDATE_JOINED_COUNTER:
+            return {
+                ...state,
+                eventInfo: {
+                    joined_users: state.eventInfo.joined_users + 1,
+                    error: false,
+                    event : [...state.eventInfo.event],
+                    event_id: '',
+                    recived: "ok"
+                }
             }
         case ACTION.CREATE_EVENT:
             return {

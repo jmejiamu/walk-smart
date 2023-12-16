@@ -71,7 +71,7 @@ const EventScreen = () => {
             <View style={styles.bottomContainer}>
                 <ButtonComponent
                     text={<Text style={styles.buttonText}>Join</Text>}
-                    onPress={() => joinEvent(auth.record.user_id, params.event_id, eventInfo.event[0])}
+                    onPress={() => joinEvent(auth.record.user_id, params.event_id, eventInfo.event[0].user_id ?? "", eventInfo.event[0])}
                 />
                 <View style={styles.joinContainer}>
                     <Icon
@@ -79,7 +79,7 @@ const EventScreen = () => {
                         size={30}
                         color={colors.color_200}
                     />
-                    <Text style={styles.joinText}> 53 </Text>
+                    <Text style={styles.joinText}>  { eventInfo.joined_users} </Text>
                 </View>
             </View>
         </View>
