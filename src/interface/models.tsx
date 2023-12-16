@@ -25,6 +25,7 @@ export interface Events {
 }
 export interface EventInfo {
     error: boolean;
+    joined_users: number; // counter
     recived: string;
     event_id: string;
     event: Event[];

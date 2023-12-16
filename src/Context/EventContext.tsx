@@ -15,7 +15,7 @@ export interface EventContextProps {
 
     newAuth: (authAction: string, auth: userForm) => void;
     createNewEvent: (event: Event) => void;
-    joinEvent: (userId: string, eventID: string, event: Event) => void;
+    joinEvent: (userId: string, eventID: string, createdByID: string, event: Event) => void;
     joinedEvent: () => void;
 
     getEventByID: (eventID: string) => void;
@@ -74,10 +74,11 @@ export const EventProvider = ({ children }: any) => {
         })
     }
 
-    const joinEvent = (userID: string, eventID: string, event: Event) => {
+    const joinEvent = (userID: string, eventID: string, createdByID: string, event: Event) => {
         // http://localhost:8080/api-v1/join?user_id=044e5c72-0e60-45ef&event_id=b4d3-beaa2f660241
         // user with id join event with id 
-        fetcheer(`${api}join?user_id=${userID}&event_id=${eventID}`, {
+        dispatch({type : ACTION.UPDATE_JOINED_COUNTER, payload : event}) // count event
+        fetcheer(`${api}join?user_id=${userID}&event_id=${eventID}&created_by_id=${createdByID}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -85,7 +86,7 @@ export const EventProvider = ({ children }: any) => {
         }).then(data => {
             if (data.joined) {
                 dispatch({ type: ACTION.JOINED, payload: data })
-            } else {
+            }else {
                 dispatch({ type: ACTION.JOIN_EVENT, payload: event })
             }
         })

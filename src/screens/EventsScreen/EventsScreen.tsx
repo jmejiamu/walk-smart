@@ -21,7 +21,7 @@ const CardEventRender = ({ event_title, time_stamp = '', event_id = '' }: Event)
 		<View>
 			<TouchableOpacity activeOpacity={0.7} onPress={() => nav.navigate('Event', { event_id })}>
 				<View style={{ marginTop: 10 }} />
-				<ListCard  key={event_id} EventName={event_title} Date={formater(time_stamp, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit' })} />
+				<ListCard key={event_id} EventName={event_title} Date={formater(time_stamp, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit' })} />
 			</TouchableOpacity>
 		</View>
 	)
@@ -64,8 +64,7 @@ const EventsScreen = () => {
 								event_id={item.event_id}
 								searchEvent={search}
 								event_title={item.event_title}
-								time_stamp={item.time_stamp}
-							/>}
+								time_stamp={item.time_stamp} />}
 							keyExtractor={item => item.event_id ?? 'unknown'}
 						/>
 						:
@@ -75,8 +74,7 @@ const EventsScreen = () => {
 							renderItem={({ item }) => <CardEventRender
 								event_id={item.event_id}
 								event_title={item.event_title}
-								time_stamp={item.time_stamp}
-							/>}
+								time_stamp={item.time_stamp}  />}
 							keyExtractor={item => item.event_id ?? 'unknown'}
 						/>
 				}
