@@ -1,8 +1,13 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { WalkScreen, ProfileScreen, EventsScreen } from '../../screens';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  WalkScreen,
+  ProfileScreen,
+  EventsScreen,
+  SettingScreen,
+} from '../../screens';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { colors } from '../../theme';
+import {colors} from '../../theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,12 +16,12 @@ const BottomNav = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        headerStyle: { elevation: 0 },
-        tabBarStyle: { backgroundColor: colors.color_300, borderTopWidth: 0 },
+        headerStyle: {elevation: 0},
+        tabBarStyle: {backgroundColor: colors.color_300, borderTopWidth: 0},
       }}>
       <Tab.Screen
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <Icon
               name="walking"
               size={25}
@@ -29,7 +34,7 @@ const BottomNav = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <Icon
               name="list"
               size={25}
@@ -42,7 +47,7 @@ const BottomNav = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <Icon
               name="user-alt"
               size={25}
@@ -52,6 +57,19 @@ const BottomNav = () => {
         }}
         name="Profile"
         component={ProfileScreen}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Icon
+              name="user-cog"
+              size={25}
+              color={focused ? colors.color_100 : colors.color_400}
+            />
+          ),
+        }}
+        name="Setting"
+        component={SettingScreen}
       />
     </Tab.Navigator>
   );
