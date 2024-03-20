@@ -1,9 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import Btn from '../../../.storybook/stories/Btn/Btn';
 import {styles} from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {EventCtx} from '../../Context/EventContext';
 
 const SettingScreen = () => {
+  const {signOut} = useContext(EventCtx);
+  const handleSingout = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      signOut();
+    } catch (error) {
+      console.log('🚀 ~ getData ~ error:', error);
+    }
+  };
+
   return (
     <SafeAreaView>
       <Text style={styles.userTextStyle}>User name</Text>
@@ -17,7 +29,11 @@ const SettingScreen = () => {
         <View style={{borderWidth: 0.5}} />
         <Text style={styles.textSettingStyle}>Change Password</Text>
         <View style={{borderWidth: 0.5}} />
-        <Btn btnState="enable" opacity={0.9} btnStyle={styles.buttonLogout}>
+        <Btn
+          action={handleSingout}
+          btnState="enable"
+          opacity={0.9}
+          btnStyle={styles.buttonLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </Btn>
       </View>
