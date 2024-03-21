@@ -7,6 +7,7 @@ import {NavigationProp} from '@react-navigation/native';
 import {EventCtx} from '../Context/EventContext';
 import React, {useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {EventScreen} from '../screens';
 
 export type RootStacksParams = {
   Signin?: Auth;
@@ -43,7 +44,10 @@ const Main = () => {
         headerShown: false,
       }}>
       {userToken !== null && userToken.length > 0 ? (
-        <Stack.Screen name="Walkin" component={BottomNav} />
+        <>
+          <Stack.Screen name="Walkin" component={BottomNav} />
+          <Stack.Screen name="Event" component={EventScreen} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Register" component={Register} />
