@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {EventCtx} from '../../Context/EventContext';
 
 const SettingScreen = () => {
-  const {signOut} = useContext(EventCtx);
+  const {auth, signOut} = useContext(EventCtx);
   const handleSingout = async () => {
     try {
       await AsyncStorage.removeItem('token');
@@ -18,7 +18,7 @@ const SettingScreen = () => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.userTextStyle}>User name</Text>
+      <Text style={styles.userTextStyle}>@{auth.record.username}</Text>
       <View style={styles.container}>
         <View style={{borderWidth: 0.5}} />
         <Text style={styles.textSettingStyle}>Notification</Text>
