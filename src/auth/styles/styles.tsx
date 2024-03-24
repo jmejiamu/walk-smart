@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { colors } from '../../theme';
+import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../theme';
 
-const { height } = Dimensions.get('screen');
+const {height} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   container: {
@@ -16,16 +16,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
   },
+  buttonStyles: {
+    backgroundColor: colors.color_100,
+    paddingVertical: 15,
+  },
+  buttonTextStyle: {
+    color: colors.color_500,
+  },
   doYouHaveAccount: {
     color: colors.color_600,
   },
   input: {
     color: colors.color_600,
     paddingLeft: 10,
- },
+    backgroundColor: colors.color_800,
+    borderRadius: 50,
+    height: 47,
+  },
   logContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   logo: {
     backgroundColor: colors.color_100,
