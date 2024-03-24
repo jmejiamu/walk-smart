@@ -80,7 +80,12 @@ const Register = ({navigation}: Props) => {
           }}
         />
         <View style={styles.bottomContainer}>
-          <ButtonComponent text="Register" onPress={registration} />
+          <ButtonComponent
+            text="Register"
+            onPress={registration}
+            custumStyles={styles.buttonStyles}
+            textStyles={styles.buttonTextStyle}
+          />
           <View style={{...styles.bottomInnerContainer, marginVertical: 10}}>
             <Text style={styles.doYouHaveAccount}>Do you have an account?</Text>
             <TouchableOpacity

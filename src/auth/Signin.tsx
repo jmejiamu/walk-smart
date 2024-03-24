@@ -67,7 +67,12 @@ const Signin = ({navigation}: Props) => {
           }}
         />
         <View style={styles.bottomContainer}>
-          <ButtonComponent text="Signin" onPress={userSignin} />
+          <ButtonComponent
+            text="Signin"
+            onPress={userSignin}
+            custumStyles={styles.buttonStyles}
+            textStyles={styles.buttonTextStyle}
+          />
           <View style={{...styles.bottomInnerContainer, marginVertical: 10}}>
             <Text style={styles.doYouHaveAccount}>
               I do not you have an account!
