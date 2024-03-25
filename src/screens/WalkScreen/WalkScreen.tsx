@@ -50,6 +50,11 @@ const WalkScreen = () => {
     }
   };
 
+  const onHandleCancel = () => {
+    cleanFormState();
+    ref.current?.close();
+  };
+
   useEffect(() => {
     AppState.addEventListener('change', state => {
       if (state !== 'active') return;
@@ -100,6 +105,7 @@ const WalkScreen = () => {
       <BottomSheetComponent
         header="Add Event"
         onHandleClose={onHandleClose}
+        onHandleCancel={onHandleCancel}
         sheetRef={ref}
         footer={
           <>
@@ -111,7 +117,7 @@ const WalkScreen = () => {
                   Message="Requiered Field to create an event"
                 />
               )}
-              <View style={{flex: 1, justifyContent: 'flex-end'}}>
+              <View style={{flex: 1, marginTop: 15}}>
                 <Text>
                   {' '}
                   Everyone near you can be part of your event, have fun!{' '}

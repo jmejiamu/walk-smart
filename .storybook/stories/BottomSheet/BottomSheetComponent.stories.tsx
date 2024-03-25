@@ -25,6 +25,7 @@ const BottomSheetMeta = {
           header="Add Event"
           onHandleClose={onHandleClose}
           onHandleOpen={onHandleOpen}
+          onHandleCancel={onHandleClose}
           sheetRef={sheetRef}
           footer="Everyone near you can be part of your event, have fun!"
           textInputProps={{placeholder: 'Event name'}}
