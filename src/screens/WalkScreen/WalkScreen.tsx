@@ -91,8 +91,8 @@ const WalkScreen = () => {
         btnOpacity={0.9}
         btnStyle={{
           position: 'absolute',
-          bottom: 65,
-          right: 30,
+          bottom: 120,
+          right: 15,
           height: 60,
           width: 60,
         }}

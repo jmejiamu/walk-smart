@@ -6,71 +6,21 @@ import {
   EventsScreen,
   SettingScreen,
 } from '../../screens';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {colors} from '../../theme';
+import {BottomTabNav} from './components/BottomTabNav';
 
 const Tab = createBottomTabNavigator();
 
 const BottomNav = () => {
   return (
     <Tab.Navigator
+      tabBar={props => <BottomTabNav props={props} />}
       screenOptions={{
         headerShown: false,
-        headerStyle: {elevation: 0},
-        tabBarStyle: {backgroundColor: colors.color_300, borderTopWidth: 0},
       }}>
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Icon
-              name="walking"
-              size={25}
-              color={focused ? colors.color_100 : colors.color_400}
-            />
-          ),
-        }}
-        name="Walk"
-        component={WalkScreen}
-      />
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Icon
-              name="list"
-              size={25}
-              color={focused ? colors.color_100 : colors.color_400}
-            />
-          ),
-        }}
-        name="Events"
-        component={EventsScreen}
-      />
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Icon
-              name="user-alt"
-              size={25}
-              color={focused ? colors.color_100 : colors.color_400}
-            />
-          ),
-        }}
-        name="Profile"
-        component={ProfileScreen}
-      />
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Icon
-              name="user-cog"
-              size={25}
-              color={focused ? colors.color_100 : colors.color_400}
-            />
-          ),
-        }}
-        name="Setting"
-        component={SettingScreen}
-      />
+      <Tab.Screen name="Walk" component={WalkScreen} />
+      <Tab.Screen name="Events" component={EventsScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Setting" component={SettingScreen} />
     </Tab.Navigator>
   );
 };
