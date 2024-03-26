@@ -23,6 +23,7 @@ const CardEventRender = ({
   event_title,
   time_stamp = '',
   event_id = '',
+  user_name = '',
 }: Event) => {
   const {formater} = useDateFormat();
 
@@ -43,7 +44,9 @@ const CardEventRender = ({
             year: 'numeric',
             hour: '2-digit',
           })}
+          CreatedBy={user_name}
         />
+        <View style={{marginBottom: 10}} />
       </TouchableOpacity>
     </View>
   );
@@ -86,7 +89,7 @@ const EventsScreen = () => {
 
   return (
     <SafeAreaView>
-      <View style={{marginHorizontal: 20, marginTop: 20}}>
+      <View style={styles.mainContainer}>
         <Search
           textValue={search}
           action={setSearch}
@@ -116,6 +119,7 @@ const EventsScreen = () => {
                 event_id={item.event_id}
                 event_title={item.event_title}
                 time_stamp={item.time_stamp}
+                user_name={item.user_name}
               />
             )}
             keyExtractor={item => item.event_id ?? 'unknown'}
