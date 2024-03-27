@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 import {colors, spacing} from '../../../../src/theme';
-
 
 export const styles = StyleSheet.create({
   footerContainer: {
@@ -9,9 +8,9 @@ export const styles = StyleSheet.create({
     marginTop: spacing.size_medium,
   },
   headerContainer: {
-    paddingHorizontal: 4, 
-    flexDirection: 'row', 
-    justifyContent: 'space-between'
+    paddingHorizontal: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   container: {
     borderWidth: 1,
@@ -25,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 17,
-    color: colors.color_400,
+    color: colors.color_300,
     fontWeight: 'bold',
   },
 });

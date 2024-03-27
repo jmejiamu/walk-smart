@@ -4,6 +4,7 @@ import Btn from '../../../.storybook/stories/Btn/Btn';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {EventCtx} from '../../Context/EventContext';
+import {colors} from '../../theme';
 
 const SettingScreen = () => {
   const {auth, signOut} = useContext(EventCtx);
@@ -20,15 +21,15 @@ const SettingScreen = () => {
     <SafeAreaView>
       <Text style={styles.userTextStyle}>@{auth.record.username}</Text>
       <View style={styles.container}>
-        <View style={{borderWidth: 0.5}} />
+        <View style={{borderWidth: 0.5, borderColor: colors.color_400}} />
         <Text style={styles.textSettingStyle}>Notification</Text>
-        <View style={{borderWidth: 0.5}} />
+        <View style={{borderWidth: 0.5, borderColor: colors.color_400}} />
         <Text style={styles.textSettingStyle}>Security setting</Text>
-        <View style={{borderWidth: 0.5}} />
+        <View style={{borderWidth: 0.5, borderColor: colors.color_400}} />
         <Text style={styles.textSettingStyle}>Change theme</Text>
-        <View style={{borderWidth: 0.5}} />
+        <View style={{borderWidth: 0.5, borderColor: colors.color_400}} />
         <Text style={styles.textSettingStyle}>Change Password</Text>
-        <View style={{borderWidth: 0.5}} />
+        <View style={{borderWidth: 0.5, borderColor: colors.color_400}} />
         <Btn
           action={handleSingout}
           btnState="enable"
