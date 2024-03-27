@@ -16,6 +16,8 @@ export const styles = StyleSheet.create({
   buttonLogout: {
     marginVertical: 20,
     padding: 8,
+    borderRadius: 29,
+    paddingVertical: 15,
   },
   buttonText: {
     fontSize: 18,
