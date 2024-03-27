@@ -37,6 +37,7 @@ const WalkScreen = () => {
       user_id: auth.record.user_id,
       latitude: location.Latitude,
       longitude: location.Longitude,
+      user_name: auth.record.username,
     };
 
     const fields = checkEmptyField(bodyRequest);
