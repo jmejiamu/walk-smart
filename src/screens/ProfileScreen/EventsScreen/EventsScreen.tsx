@@ -1,5 +1,5 @@
 import {useContext, useEffect} from 'react';
-import {FlatList, Platform, View} from 'react-native';
+import {FlatList, Platform, Text, View} from 'react-native';
 import Card from '../Card/Card';
 import React from 'react';
 import {EventCtx} from '../../../Context/EventContext';

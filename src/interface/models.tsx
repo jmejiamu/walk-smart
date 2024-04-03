@@ -57,4 +57,5 @@ export interface Event {
   longitude?: number;
   time_stamp?: string;
   user_name?: string;
+  counter?: number;
 }
