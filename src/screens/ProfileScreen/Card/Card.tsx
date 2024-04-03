@@ -24,7 +24,7 @@ const Card = ({data}: {data: Event}) => {
       titleStyle={{fontSize: 18}}
       title={data.event_title}
       likes={90}
-      joined={53}
+      joined={data.counter ?? 0}
       joinedDate={formater(data.time_stamp, {
         month: 'short',
         day: 'numeric',
