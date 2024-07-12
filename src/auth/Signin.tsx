@@ -40,11 +40,7 @@ const Signin = ({navigation}: Props) => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <View
-        style={{
-          padding: 2,
-          justifyContent: 'space-around',
-        }}>
+      <View style={styles.innerContainer}>
         <View style={styles.logContainer}>
           <Image style={styles.logo} source={require('../assets/log.png')} />
         </View>
@@ -90,7 +86,7 @@ const Signin = ({navigation}: Props) => {
                   },
                 })
               }
-              style={{alignSelf: 'flex-end'}}>
+              style={styles.siginContainer}>
               <Text> Register </Text>
             </TouchableOpacity>
           </View>

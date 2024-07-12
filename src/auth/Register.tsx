@@ -41,17 +41,15 @@ const Register = ({navigation}: Props) => {
     setEmpty(isEmpty);
   };
 
+  let logo = require('../assets/log.png');
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <View
-        style={{
-          padding: 2,
-          justifyContent: 'space-around',
-        }}>
+      <View style={styles.innerContainer}>
         <View style={styles.logContainer}>
-          <Image style={styles.logo} source={require('../assets/log.png')} />
+          <Image style={styles.logo} source={logo} />
         </View>
         <TextInputForm
           title="Full Name"
@@ -86,7 +84,7 @@ const Register = ({navigation}: Props) => {
             custumStyles={styles.buttonStyles}
             textStyles={styles.buttonTextStyle}
           />
-          <View style={{...styles.bottomInnerContainer, marginVertical: 10}}>
+          <View style={[styles.bottomInnerContainer, {marginVertical: 10}]}>
             <Text style={styles.doYouHaveAccount}>Do you have an account?</Text>
             <TouchableOpacity
               onPress={() =>
@@ -101,7 +99,7 @@ const Register = ({navigation}: Props) => {
                   },
                 })
               }
-              style={{alignSelf: 'flex-end'}}>
+              style={styles.siginContainer}>
               <Text> Sign in</Text>
             </TouchableOpacity>
           </View>
