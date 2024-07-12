@@ -8,6 +8,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.color_200,
   },
+  innerContainer: {
+    padding: 2,
+    justifyContent: 'space-around',
+  },
+  siginContainer: {
+    alignSelf: 'flex-end',
+  },
   bottomContainer: {
     top: 10,
     marginHorizontal: 10,
