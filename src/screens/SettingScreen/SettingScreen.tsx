@@ -5,6 +5,7 @@ import {styles} from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {EventCtx} from '../../Context/EventContext';
 import {colors} from '../../theme';
+import {log} from '../../utils';
 
 const SettingScreen = () => {
   const {auth, signOut} = useContext(EventCtx);
@@ -13,7 +14,7 @@ const SettingScreen = () => {
       await AsyncStorage.removeItem('token');
       signOut();
     } catch (error) {
-      console.log('🚀 ~ getData ~ error:', error);
+      log.error('🚀 File: SettingScreen -|- Func: handleSingout:', error);
     }
   };
 

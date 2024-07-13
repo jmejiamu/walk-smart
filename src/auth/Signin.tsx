@@ -10,6 +10,7 @@ import {userForm} from '../interface/models';
 import {useForm} from '../hook/useForm';
 import Alert from '../../.storybook/stories/Alert/Alert';
 import {EventCtx} from '../Context/EventContext';
+import {log} from '../utils';
 
 interface Props extends StackScreenProps<RootStacksParams, 'Signin'> {}
 
@@ -32,7 +33,7 @@ const Signin = ({navigation}: Props) => {
       }
       setIsEmpty(isEmpty);
     } catch (error) {
-      console.log('🚀 ~ file: Signin.tsx ~ userSignin ~ error', error);
+      log.error('🚀 File: Signin.tsx -|- Func: userSignin - error', error);
     }
   };
 
