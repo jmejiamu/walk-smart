@@ -14,6 +14,7 @@ import {ACTION} from './actions';
 import {useFetcheer} from '../hook/useFetch';
 import {ApiCall, localURL} from './baseURL';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {log} from '../utils';
 
 export interface EventContextProps {
   auth: Auth;
@@ -64,7 +65,7 @@ export const EventProvider = ({children}: any) => {
       dispatch({type: ACTION.USER_AUTH, payload: data});
       await AsyncStorage.setItem('token', data.record.token);
     } catch (error) {
-      console.log('🚀 ~ file: EventContext.tsx ~ newAuth ~ error', error);
+      log.error('🚀 File: EventContext.tsx -|- Func: newAuth - error', error);
     }
   };
 

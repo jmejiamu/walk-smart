@@ -8,6 +8,7 @@ import {EventCtx} from '../Context/EventContext';
 import React, {useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {EventScreen} from '../screens';
+import {log} from '../utils';
 
 export type RootStacksParams = {
   Signin?: Auth;
@@ -30,7 +31,7 @@ const Main = () => {
       const token = await AsyncStorage.getItem('token');
       setUserToken(token);
     } catch (error) {
-      console.log('🚀 ~ getData ~ error:', error);
+      log.error('🚀 File: Main -|- Func: getData - error:', error);
     }
   };
 
